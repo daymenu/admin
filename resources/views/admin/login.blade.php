@@ -10,30 +10,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
     <!-- bootstrap & fontawesome -->
-    <link rel="stylesheet" href="{{ url('admin/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ url('admin/font-awesome/4.5.0/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url('assets/font-awesome/4.5.0/css/font-awesome.min.css') }}" />
 
     <!-- text fonts -->
-    <link rel="stylesheet" href="{{ url('admin/css/fonts.googleapis.com.css') }}" />
+    <link rel="stylesheet" href="{{ url('assets/css/fonts.googleapis.com.css') }}" />
+    <link rel="stylesheet" href="{{ url('assets/css/ace.min.css') }}" />
+    <link rel="stylesheet" href="{{ url('assets/css/ace-rtl.min.css') }}" />
 
-    <!-- ace styles -->
-    <link rel="stylesheet" href="{{ url('admin/css/ace.min.css') }}" />
 
-    <!--[if lte IE 9]>
-			<link rel="stylesheet" href="{{ url('admin/css/ace-part2.min.css') }}" />
-		<![endif]-->
-    <link rel="stylesheet" href="{{ url('admin/css/ace-rtl.min.css') }}" />
-
-    <!--[if lte IE 9]>
-		  <link rel="stylesheet" href="{{ url('admin/css/ace-ie.min.css') }}" />
-		<![endif]-->
-
-    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
-
-    <!--[if lte IE 8]>
-		<script src="{{ url('admin/js/html5shiv.min.js') }}"></script>
-		<script src="{{ url('admin/js/respond.min.js') }}"></script>
-		<![endif]-->
 </head>
 
 <body class="login-layout">
@@ -108,17 +93,10 @@
 
     <!-- basic scripts -->
 
-    <!--[if !IE]> -->
-    <script src="{{ url('admin/js/jquery-2.1.4.min.js') }}"></script>
-
-    <!-- <![endif]-->
-
-    <!--[if IE]>
-    <script src="{{ url('admin/js/jquery-1.11.3.min.js')}}"></script>
-    <![endif]-->
+    <script src="{{ url('assets/js/jquery-2.1.4.min.js') }}"></script>
     <script type="text/javascript">
         if ('ontouchstart' in document.documentElement) document.write(
-            "<script src='{{ url('admin/js/jquery.mobile.custom.min.js')}}'>" + "<" + "/script>");
+            "<script src='{{ url('assets/js/jquery.mobile.custom.min.js')}}'>" + "<" + "/script>");
 
     </script>
 

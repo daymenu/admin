@@ -10,22 +10,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
     <!-- bootstrap & fontawesome -->
-    <link rel="stylesheet" href="{{ url('admin/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ url('admin/font-awesome/4.5.0/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url('assets/font-awesome/4.5.0/css/font-awesome.min.css') }}" />
 
     <!-- text fonts -->
-    <link rel="stylesheet" href="{{ url('admin/css/fonts.googleapis.com.css') }}" />
+    <link rel="stylesheet" href="{{ url('assets/css/fonts.googleapis.com.css') }}" />
 
     <!-- ace styles -->
-    <link rel="stylesheet" href="{{ url('admin/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
-    <link rel="stylesheet" href="{{ url('admin/css/ace-skins.min.css') }}" />
-    <link rel="stylesheet" href="{{ url('admin/css/ace-rtl.min.css') }}" />
+    <link rel="stylesheet" href="{{ url('assets/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
+    <link rel="stylesheet" href="{{ url('assets/css/ace-skins.min.css') }}" />
+    <link rel="stylesheet" href="{{ url('assets/css/ace-rtl.min.css') }}" />
 
     <!-- admin styles -->
     @stack('styles')
 
     <!-- ace settings handler -->
-    <script src="{{ url('admin/js/ace-extra.min.js') }}"></script>
+    <script src="{{ url('assets/js/ace-extra.min.js') }}"></script>
     @stack('headScripts')
 </head>
 
@@ -59,7 +59,7 @@
                                 <ul class="dropdown-menu dropdown-navbar">
                                     <li>
                                         <a href="#" class="clearfix">
-                                            <img src="{{ url('admin/images/avatars/avatar.png') }}" class="msg-photo"
+                                            <img src="{{ url('assets/images/avatars/avatar.png') }}" class="msg-photo"
                                                 alt="Alex's Avatar" />
                                             <span class="msg-body">
                                                 <span class="msg-title">
@@ -88,7 +88,7 @@
 
                     <li class="light-blue dropdown-modal">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                            <img class="nav-user-photo" src="{{ url('admin/images/avatars/user.jpg') }}" alt="Jason's Photo" />
+                            <img class="nav-user-photo" src="{{ url('assets/images/avatars/user.jpg') }}" alt="Jason's Photo" />
                             <span class="user-info">
                                 <small>Welcome,</small>
                                 Jason
@@ -276,21 +276,21 @@
     </div><!-- /.main-container -->
 
     <!-- basic scripts -->
-    <script src="{{ url('admin/js/jquery-2.1.4.min.js') }}"></script>
+    <script src="{{ url('assets/js/jquery-2.1.4.min.js') }}"></script>
 
     <script type="text/javascript">
-        if ('ontouchstart' in document.documentElement) document.write("<script src='{{ url('admin/js/jquery.mobile.custom.min.js') }}>" + "<" + "/script>");
+        if ('ontouchstart' in document.documentElement) document.write("<script src='{{ url('assets/js/jquery.mobile.custom.min.js') }}>" + "<" + "/script>");
     </script>
 
-    <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('assets/js/bootstrap.min.js') }}"></script>
 
     <!-- page specific plugin scripts -->
-    <script src="{{ url('admin/js/jquery-ui.custom.min.js') }}"></script>
-    <script src="{{ url('admin/js/jquery.ui.touch-punch.min.js') }}"></script>
+    <script src="{{ url('assets/js/jquery-ui.custom.min.js') }}"></script>
+    <script src="{{ url('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
 
     <!-- ace scripts -->
-    <script src="{{ url('admin/js/ace-elements.min.js') }}"></script>
-    <script src="{{ url('admin/js/ace.min.js') }}"></script>
+    <script src="{{ url('assets/js/ace-elements.min.js') }}"></script>
+    <script src="{{ url('assets/js/ace.min.js') }}"></script>
 
     <!-- admin scripts -->
     @stack('scripts')

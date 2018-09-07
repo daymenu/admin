@@ -15,11 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('admin')->group(function () {
-    Route::get('login', function () {
-        return view('admin/login');
-    });
-    Route::get('index', function () {
-        return view('admin/index');
+Route::prefix('admin')->namespace('Admin')->group(function () {
+    Route::get('login', 'Login@index');
+    Route::middleware(['admin'])->group(function () {
+        Route::get('', 'Index@index');
     });
 });

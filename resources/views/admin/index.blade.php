@@ -13,5 +13,5 @@
 @endpush
 
 @section('content')
-    
+    {{$data}}
 @endsection
