@@ -13,7 +13,10 @@ return [
     |
     */
 
-    'name' => 'admin 后台管理',
+    'name'      => 'admin 后台管理',
     'brower'    => '请使用IE9及以上浏览器',
+    'company'   => '北京天马行空有限公司',
+    'copy'      => '2018-2019',
+
 
 ];

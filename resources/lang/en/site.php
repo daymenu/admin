@@ -14,5 +14,7 @@ return [
     */
 
     'siteName' => 'admin Application',
-
+    'brower'    => 'Please use IE9 and above',
+    'company'   => '北京天马行空有限公司',
+    'copy'      => '2018-2019',
 ];

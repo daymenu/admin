@@ -17,9 +17,9 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function () {
     Route::get('login', function () {
-        return view('login');
+        return view('admin/login');
     });
     Route::get('index', function () {
-        return view('layout');
+        return view('admin/index');
     });
 });
