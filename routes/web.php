@@ -14,10 +14,3 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::prefix('admin')->namespace('Admin')->group(function () {
-    Route::get('login', 'Login@index');
-    Route::middleware(['admin'])->group(function () {
-        Route::get('', 'Index@index');
-    });
-});
