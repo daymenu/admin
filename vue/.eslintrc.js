@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
   parserOptions: {
+    parser: 'babel-eslint',
     sourceType: 'module'
   },
   env: {
@@ -9,22 +9,19 @@ module.exports = {
     node: true,
     es6: true,
   },
-  extends: 'eslint:recommended',
-  // required to lint *.vue files
-  plugins: [
-    'html'
-  ],
-  // check if imports actually resolve
-  'settings': {
-    'import/resolver': {
-      'webpack': {
-        'config': 'build/webpack.base.conf.js'
-      }
-    }
-  },
+  extends: ['plugin:vue/recommended', 'eslint:recommended'],
+
   // add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue
-  'rules': {
+  rules: {
+    "vue/max-attributes-per-line": [2, {
+      "singleline": 10,
+      "multiline": {
+        "max": 1,
+        "allowFirstLine": false
+      }
+    }],
+    "vue/name-property-casing": ["error", "PascalCase"],
     'accessor-pairs': 2,
     'arrow-spacing': [2, {
       'before': true,
@@ -76,7 +73,7 @@ module.exports = {
     'no-class-assign': 2,
     'no-cond-assign': 2,
     'no-const-assign': 2,
-    'no-control-regex': 0,
+    'no-control-regex': 2,
     'no-delete-var': 2,
     'no-dupe-args': 2,
     'no-dupe-class-members': 2,

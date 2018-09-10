@@ -6,18 +6,14 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {},
 
     // Various Dev Server settings
-
-    // can be overwritten by process.env.HOST
-    // if you want dev by ip, please set host: '0.0.0.0'
-    host: 'localhost',
-    port: 9527, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    host: 'localhost', // can be overwritten by process.env.HOST
+    port: 9528, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: false,
@@ -43,7 +39,7 @@ module.exports = {
     // (https://github.com/webpack/css-loader#sourcemaps)
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
-    cssSourceMap: false,
+    cssSourceMap: false
   },
 
   build: {
@@ -61,11 +57,12 @@ module.exports = {
      * then assetsPublicPath should be set to "/bar/".
      * In most cases please use '/' !!!
      */
-    assetsPublicPath: '/vue-element-admin/', // If you are deployed on the root path, please use '/'
+    assetsPublicPath: '/',
 
     /**
      * Source Maps
      */
+
     productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: 'source-map',
@@ -79,11 +76,11 @@ module.exports = {
 
     // Run the build command with an extra argument to
     // View the bundle analyzer report after build finishes:
-    // `npm run build:prod --report`
+    // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report || false,
 
-      // `npm run build:prod --generate_report`
+    // `npm run build:prod --generate_report`
     generateAnalyzerReport: process.env.npm_config_generate_report || false
   }
 }
