@@ -9,8 +9,10 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/auth/{social}', 'Web\AuthenticationController@redirect')
+    ->middleware('guest');
+
+Route::get('/auth/{social}/callback', 'Web\AuthenticationController@callback')
+    ->middleware('guest');
