@@ -19,9 +19,9 @@ Route::get('/nologin', function () {
 })->name('nologin');
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::post('/login', function (Request $request) {
-        return ['dfd'];
-    });
+
+    Route::post('/login', 'Api\LoginController@index');
+
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('/user', function (Request $request) {
             return ['dfd'];
