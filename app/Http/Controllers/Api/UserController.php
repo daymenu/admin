@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function info(Request $request)
     {
-        $accessToken  = $request->input('access_token');
-        return ['code' => 200, 'data' => $accessToken];
+        $user = $request->user();
+        return ['code' => 200, 'data' => $user->toArray()];
     }
 }

@@ -20,7 +20,7 @@ class LoginController extends Controller
                 'client_secret' => config('passport.client_secret'),
                 'username' => $username,
                 'password' => $password,
-                'scope' => '',
+                'scope' => '*',
             ],
         ]);
         return ['code' => 200, 'data' => json_decode((string) $response->getBody(), true)];
