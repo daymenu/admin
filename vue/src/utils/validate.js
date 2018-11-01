@@ -30,3 +30,9 @@ export function validatAlphabets(str) {
   const reg = /^[A-Za-z]+$/
   return reg.test(str)
 }
+
+/* 邮箱号*/
+export function validatEmail(str) {
+  const reg = /([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
+  return reg.test(str)
+}

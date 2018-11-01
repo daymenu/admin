@@ -18,13 +18,11 @@ Route::get('/nologin', function () {
     return ['code' => 100010, 'msg' => '请重新登录'];
 })->name('nologin');
 
-Route::group(['prefix' => 'v1'], function () {
+Route::group(['prefix' => 'admin'], function () {
 
-    Route::post('/login', 'Api\LoginController@index');
+    Route::post('/login', 'Api\LoginController@index')->name('admin.login');
 
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::get('/user', function (Request $request) {
-            return ['dfd'];
-        });
+        Route::get('/user/info', 'Api\UserController@info')->name('admin.user.info');
     });
 });
