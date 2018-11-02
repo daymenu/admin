@@ -23,6 +23,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/login', 'Api\LoginController@index')->name('admin.login');
 
     Route::group(['middleware' => 'auth:api'], function () {
+        Route::post('/logout', 'Api\LoginController@logout')->name('admin.logout');
+        
         Route::get('/user/info', 'Api\UserController@info')->name('admin.user.info');
     });
 });

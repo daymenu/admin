@@ -10,4 +10,21 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function apiSuccess($data = [], $msg = '', $code = 200)
+    {
+        return [
+            'code' => $code,
+            'data' => $data,
+            'msg' => $msg,
+        ];
+    }
+
+    public function apiFaild($msg = '', $code = 300)
+    {
+        return [
+            'code' => $code,
+            'msg' => $msg,
+        ];
+    }
 }
