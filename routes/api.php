@@ -25,7 +25,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/logout', 'Api\LoginController@logout')->name('admin.logout');
         
+        Route::get('/user','Api\UserController@index')->name('user.index');
+        Route::get('/user/show','Api\UserController@show')->name('user.show');
+        Route::post('/user/store','Api\UserController@store')->name('user.store');
+        Route::post('/user/update','Api\UserController@update')->name('user.update');
+        Route::post('/user/destroy','Api\UserController@destroy')->name('user.destroy');
         Route::get('/user/info','Api\UserController@info')->name('user.info');
-        Route::resource('user','Api\UserController');
     });
 });

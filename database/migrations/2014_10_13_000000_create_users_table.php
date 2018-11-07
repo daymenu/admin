@@ -20,12 +20,11 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->comment('邮箱号');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->default('')->comment('密码');
-            $table->string('provider')->default('')->comment('第三方');
-            $table->string('provider_id')->default('')->comment('第三方用户ID');
             $table->text('avatar')->default('')->comment('头像');
-            $table->ingter('status')->default(0)->comment('状态 0 正常 1 禁用');
+            $table->integer('status')->default(1)->comment('状态 1 正常 2 禁用');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
