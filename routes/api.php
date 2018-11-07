@@ -25,6 +25,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/logout', 'Api\LoginController@logout')->name('admin.logout');
         
-        Route::get('/user/info', 'Api\UserController@info')->name('admin.user.info');
+        Route::get('/user/info','Api\UserController@info')->name('user.info');
+        Route::resource('user','Api\UserController');
     });
 });

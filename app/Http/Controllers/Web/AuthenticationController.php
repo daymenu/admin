@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('provider')->default('')->comment('第三方');
             $table->string('provider_id')->default('')->comment('第三方用户ID');
             $table->text('avatar')->default('')->comment('头像');
+            $table->ingter('status')->default(0)->comment('状态 0 正常 1 禁用');
             $table->rememberToken();
             $table->timestamps();
         });
