@@ -11,6 +11,12 @@ import {
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
+  validateStatus: function(status) {
+    if (status === 422) {
+      return true
+    }
+    return status >= 200 && status < 300 // 默认的
+  },
   timeout: 5000 // 请求超时时间
 })
 
@@ -33,10 +39,16 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
-    /**
-     * code为非20000是抛错 可结合自己业务进行修改
-     */
     const res = response.data
+    if (response.status === 422) {
+      console.log(res.errors.title)
+      // Message({
+      //   message: response.errors.title,
+      //   type: 'error',
+      //   duration: 5 * 1000
+      // })
+      return Promise.reject('error')
+    }
     if (res.code !== 200) {
       Message({
         message: res.message,
@@ -65,7 +77,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
+    console.log('err:' + error) // for debug
     Message({
       message: error.message,
       type: 'error',

@@ -16,7 +16,7 @@ class Controller extends BaseController
         return [
             'code' => $code,
             'data' => $data,
-            'msg' => $msg,
+            'message' => $msg,
         ];
     }
 
@@ -24,7 +24,7 @@ class Controller extends BaseController
     {
         return [
             'code' => $code,
-            'msg' => $msg,
+            'message' => $msg,
         ];
     }
 }

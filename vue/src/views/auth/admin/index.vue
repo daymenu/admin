@@ -46,8 +46,28 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="邮箱" prop="timestamp">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date"/>
+        <el-form-item label="姓名" prop="name">
+          <el-date-picker v-model="temp.name" type="text" placeholder="请输入姓名"/>
+        </el-form-item>
+      </el-form>
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="昵称" prop="nick_name">
+          <el-date-picker v-model="temp.nick_name" type="text" placeholder="请输入昵称"/>
+        </el-form-item>
+      </el-form>
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="邮箱" prop="email">
+          <el-date-picker v-model="temp.email" type="email" placeholder="请输入邮箱号"/>
+        </el-form-item>
+      </el-form>
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="密码" prop="password">
+          <el-date-picker v-model="temp.email" type="password" placeholder="请输入密码"/>
+        </el-form-item>
+      </el-form>
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="确认密码" prop="repassword">
+          <el-date-picker v-model="temp.repassword" type="password" placeholder="请再次输入密码"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -91,12 +111,13 @@ export default {
       statusOptions: ['published', 'draft', 'deleted'],
       temp: {
         id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
+        name: '',
+        email: '',
+        nick_name: '',
+        password: '',
+        repassword: '',
+        avatar: '',
+        status: 1
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -130,12 +151,13 @@ export default {
     resetTemp() {
       this.temp = {
         id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        status: 'published',
-        type: ''
+        name: '',
+        email: '',
+        nick_name: '',
+        password: '',
+        repassword: '',
+        avatar: '',
+        status: 1
       }
     },
     create() {
@@ -149,8 +171,6 @@ export default {
     store() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'vue-element-admin'
           store(this.temp).then(() => {
             this.list.unshift(this.temp)
             this.dialogFormVisible = false
@@ -160,6 +180,8 @@ export default {
               type: 'success',
               duration: 2000
             })
+          }).catch(error => {
+            console.log(error)
           })
         }
       })

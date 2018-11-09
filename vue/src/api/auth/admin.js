@@ -20,7 +20,7 @@ export function show(id) {
 
 export function store(user) {
   return request({
-    url: '/api/admin/user/show',
+    url: '/api/admin/user/store',
     method: 'post',
     data: user
   })
