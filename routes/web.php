@@ -10,9 +10,3 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-
-Route::get('/auth/{social}', 'Web\AuthenticationController@redirect')
-    ->middleware('guest');
-
-Route::get('/auth/{social}/callback', 'Web\AuthenticationController@callback')
-    ->middleware('guest');

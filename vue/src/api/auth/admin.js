@@ -1,8 +1,10 @@
 import request from '@/utils/request'
 
+const baseUrl = '/api/admin/user'
+
 export function getList(search) {
   return request({
-    url: '/api/admin/user',
+    url: baseUrl,
     method: 'get',
     params: search
   })
@@ -10,37 +12,31 @@ export function getList(search) {
 
 export function show(id) {
   return request({
-    url: '/api/admin/user/show',
-    method: 'get',
-    params: {
-      id: id
-    }
+    url: baseUrl + '/' + id,
+    method: 'get'
   })
 }
 
 export function store(user) {
   return request({
-    url: '/api/admin/user/store',
+    url: baseUrl,
     method: 'post',
     data: user
   })
 }
 
-export function update(user) {
+export function update(id, user) {
   return request({
-    url: '/api/admin/user/update',
-    method: 'post',
+    url: baseUrl + '/' + id,
+    method: 'put',
     data: user
   })
 }
 
 export function destroy(id) {
   return request({
-    url: '/api/admin/user/destroy',
-    method: 'post',
-    data: {
-      id: id
-    }
+    url: baseUrl + '/' + id,
+    method: 'delete'
   })
 }
 

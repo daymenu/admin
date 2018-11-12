@@ -47,27 +47,27 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="姓名" prop="name">
-          <el-date-picker v-model="temp.name" type="text" placeholder="请输入姓名"/>
+          <el-input v-model="temp.name" type="text" placeholder="请输入姓名"/>
         </el-form-item>
       </el-form>
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="昵称" prop="nick_name">
-          <el-date-picker v-model="temp.nick_name" type="text" placeholder="请输入昵称"/>
+          <el-input v-model="temp.nick_name" type="text" placeholder="请输入昵称"/>
         </el-form-item>
       </el-form>
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="邮箱" prop="email">
-          <el-date-picker v-model="temp.email" type="email" placeholder="请输入邮箱号"/>
+          <el-input v-model="temp.email" type="email" placeholder="请输入邮箱号"/>
         </el-form-item>
       </el-form>
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="密码" prop="password">
-          <el-date-picker v-model="temp.email" type="password" placeholder="请输入密码"/>
+          <el-input v-model="temp.password" type="password" placeholder="请输入密码"/>
         </el-form-item>
       </el-form>
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="确认密码" prop="repassword">
-          <el-date-picker v-model="temp.repassword" type="password" placeholder="请再次输入密码"/>
+          <el-input v-model="temp.repassword" type="password" placeholder="请再次输入密码"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -126,9 +126,7 @@ export default {
         create: '添加'
       },
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        name: [{ required: true, message: '请填写姓名', trigger: 'blur' }]
       }
     }
   },
@@ -188,7 +186,7 @@ export default {
     },
     edit(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
+      this.temp.password = ''
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -200,7 +198,7 @@ export default {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          update(tempData).then(() => {
+          update(tempData.id, tempData).then(() => {
             for (const v of this.list) {
               if (v.id === this.temp.id) {
                 const index = this.list.indexOf(v)

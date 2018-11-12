@@ -41,12 +41,14 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     if (response.status === 422) {
-      console.log(res.errors.title)
-      // Message({
-      //   message: response.errors.title,
-      //   type: 'error',
-      //   duration: 5 * 1000
-      // })
+      for (const key in res.errors) {
+        Message({
+          message: res.errors[key].join('<br>'),
+          type: 'error',
+          duration: 5 * 1000
+        })
+        break
+      }
       return Promise.reject('error')
     }
     if (res.code !== 200) {

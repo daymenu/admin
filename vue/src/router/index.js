@@ -63,12 +63,6 @@ export const constantRouterMap = [
         component: () => import('@/views/nested/menu1/index'), // Parent router-view
         name: 'menu',
         meta: { title: '菜单管理' }
-      },
-      {
-        path: 'button',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'button',
-        meta: { title: '菜单管理' }
       }
     ]
   },

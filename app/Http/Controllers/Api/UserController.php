@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\UsersRequest;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -14,9 +13,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->apiSuccess(User::paginate(15));
+        
+        return $this->apiSuccess(User::paginate($request->input('limit')));
     }
 
     /**
@@ -25,18 +25,18 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UsersRequest $request)
+    public function store(Request $request)
     {
-        
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(User $user)
     {
         $id = (int)$request->input('id');
         return $this->apiSuccess(User::find($id));
@@ -46,9 +46,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -56,12 +57,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(User $user)
     {
-        $id = (int)$request->input('id');
-        $user = User::find($id);
         if($user){
             $user->delete();
             return $this->apiSuccess();
@@ -78,6 +78,6 @@ class UserController extends Controller
      */
     public function info(Request $request)
     {
-        return $this->apiSuccess($request->user()->toArray());
+        return $this->apiSuccess($request->user());
     }
 }
