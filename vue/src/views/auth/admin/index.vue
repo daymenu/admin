@@ -70,6 +70,11 @@
           <el-input v-model="temp.repassword" type="password" placeholder="请再次输入密码"/>
         </el-form-item>
       </el-form>
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="所属角色" prop="repassword">
+          <el-input v-model="temp.repassword" type="password" placeholder="请再次输入密码"/>
+        </el-form-item>
+      </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogStatus==='create'?store():update()">{{ dialogStatus==='create'?'添加':'修改' }}</el-button>
         <el-button @click="dialogFormVisible = false">取消</el-button>
@@ -117,6 +122,7 @@ export default {
         password: '',
         repassword: '',
         avatar: '',
+        role: [],
         status: 1
       },
       dialogFormVisible: false,

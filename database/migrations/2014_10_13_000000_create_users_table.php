@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->default('')->comment('密码');
             $table->text('avatar')->default('')->comment('头像');
-            $table->integer('status')->default(1)->comment('状态 1 正常 2 禁用');
+            $table->tinyInteger('status')->default(1)->comment('状态 1 正常 2 禁用');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

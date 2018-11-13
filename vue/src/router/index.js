@@ -7,7 +7,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-import Layout from '../views/layout/Layout'
+// import Layout from '../views/layout/Layout'
 
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -27,7 +27,7 @@ export const constantRouterMap = [
 
   {
     path: '/',
-    component: Layout,
+    component: () => import('@/views/layout/Layout'),
     redirect: '/dashboard',
     name: 'Dashboard',
     hidden: true,
@@ -39,7 +39,7 @@ export const constantRouterMap = [
 
   {
     path: '/auth',
-    component: Layout,
+    component: () => import('@/views/layout/Layout'),
     redirect: '/auth/admin',
     name: 'auth',
     meta: {
