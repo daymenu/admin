@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
+use App\Models\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class UserController extends Controller
+class ApiController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        
-        return $this->apiSuccess(User::paginate($request->input('limit')));
+        //
     }
 
     /**
@@ -33,22 +32,22 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Api  $api
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Api $api)
     {
-        return $this->apiSuccess($user);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Api  $api
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Api $api)
     {
         //
     }
@@ -56,27 +55,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Api  $api
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Api $api)
     {
-        if($user){
-            $user->delete();
-            return $this->apiSuccess();
-        }else{
-            return $this->apiFaild('用户不存在');
-        }
-    }
-
-    /**
-     * 获取当前登录用户的信息
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function info(Request $request)
-    {
-        return $this->apiSuccess($request->user());
+        //
     }
 }

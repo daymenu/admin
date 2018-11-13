@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
             'name' => '韩剑',
             'nick_name' => '小贱贱',
             'email' => 'hanjian2018@126.com',
-            'password' => Hash::make('secret'),
+            'password' => Hash::make('123456'),
             'status' => 1,
             'created_at' => date('Y-m-d H:i:s'),
             
