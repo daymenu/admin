@@ -24,6 +24,7 @@ class CreateMenusTable extends Migration
             $table->tinyInteger('type')->default(1)->comment('菜单类别 1 菜单 2 按钮');
             $table->tinyInteger('always_show')->default(1)->comment('菜单置顶 1 是 2 否');
             $table->tinyInteger('hidden')->default(1)->comment('菜单隐藏 1 是 2 否');
+            $table->integer('sort')->default(1)->comment('菜单排序');
             $table->tinyInteger('status')->default(1)->comment('状态 1 正常 2 禁用');
             $table->timestamps();
             $table->softDeletes();

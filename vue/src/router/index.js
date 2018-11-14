@@ -56,6 +56,7 @@ export const constantRouterMap = [
       {
         path: 'role',
         component: () => import('@/views/table/index'),
+        name: 'role',
         meta: { title: '角色管理' }
       },
       {
@@ -63,6 +64,12 @@ export const constantRouterMap = [
         component: () => import('@/views/nested/menu1/index'), // Parent router-view
         name: 'menu',
         meta: { title: '菜单管理' }
+      },
+      {
+        path: 'api',
+        component: () => import('@/views/auth/api/index'), // Parent router-view
+        name: 'api',
+        meta: { title: '接口管理' }
       }
     ]
   },
@@ -71,7 +78,7 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
-  // mode: 'history', //后端支持可开
+  mode: 'history', // 后端支持可开
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })

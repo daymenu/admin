@@ -13,9 +13,12 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->input('search');
+        $api = Api::where();
+        $api = Api::paginate($request->input('limit'));
+        return $this->apiSuccess($api);
     }
 
     /**

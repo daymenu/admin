@@ -15,7 +15,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        
         return $this->apiSuccess(User::paginate($request->input('limit')));
     }
 
