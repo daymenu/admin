@@ -15,7 +15,9 @@ class CreateApisTable extends Migration
     {
         Schema::create('apis', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->default('')->comment('路由名称');
+            $table->string('name')->default('')->comment('接口名称');
+            $table->string('route')->default('')->comment('路由');
+            $table->string('url')->default('')->comment('接口地址');
             $table->tinyInteger('status')->default(1)->comment('状态 1 正常 2 禁用');
             $table->timestamps();
             $table->softDeletes();
