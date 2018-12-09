@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Api extends Model
 {
     use SoftDeletes;
+    
+    protected $dates = [
+        'created_at', 
+        'updated_at', 
+        'disabled_at'
+    ];
 }

@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Models\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests\Api\ApiRequest;
+use DB;
 class ApiController extends Controller
 {
     /**
@@ -13,12 +14,16 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, Api $api)
     {
         $search = $request->input('search');
-        $api = Api::where();
-        $api = Api::paginate($request->input('limit'));
-        return $this->apiSuccess($api);
+        DB::enableQueryLog();
+        if($search){
+            $api = $api->where('name', 'like', '%' . $search . '%');
+        }
+        $list = $api->paginate($request->input('limit'));
+        //dd(DB::getQueryLog());
+        return $this->apiSuccess($list);
     }
 
     /**
@@ -27,9 +32,14 @@ class ApiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ApiRequest $request, Api $api)
     {
-        //
+        $validated = $request->validated();
+        $api->name = (string)$request->input('name');
+        $api->route = (string)$request->input('route');
+        $api->url = (string)$request->input('url');
+        $api->save();
+        return $this->apiSuccess($api);
     }
 
     /**
@@ -40,7 +50,7 @@ class ApiController extends Controller
      */
     public function show(Api $api)
     {
-        //
+        return $this->apiSuccess($api);
     }
 
     /**
@@ -50,9 +60,14 @@ class ApiController extends Controller
      * @param  \App\Models\Api  $api
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Api $api)
+    public function update(ApiRequest $request, Api $api)
     {
-        //
+        $validated = $request->validated();
+        $api->name = (string)$request->input('name');
+        $api->route = (string)$request->input('route');
+        $api->url = (string)$request->input('url');
+        $api->save();
+        return $this->apiSuccess($api);
     }
 
     /**
@@ -63,6 +78,7 @@ class ApiController extends Controller
      */
     public function destroy(Api $api)
     {
-        //
+        $api->delete();
+        return $this->apiSuccess($api);
     }
 }
