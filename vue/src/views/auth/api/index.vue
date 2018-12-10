@@ -105,7 +105,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 1,
+        limit: 10,
         search: undefined
       },
       statusOptions: ['published', 'draft', 'deleted'],
@@ -169,8 +169,8 @@ export default {
     store() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          store(this.temp).then(() => {
-            this.list.unshift(this.temp)
+          store(this.temp).then((res) => {
+            this.list.unshift(res.data)
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',

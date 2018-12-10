@@ -18,10 +18,10 @@ class ApiController extends Controller
     {
         $search = $request->input('search');
         DB::enableQueryLog();
-        if($search){
+        if ($search) {
             $api = $api->where('name', 'like', '%' . $search . '%');
         }
-        $list = $api->paginate($request->input('limit'));
+        $list = $api->orderBy('id', 'desc')->paginate($request->input('limit'));
         //dd(DB::getQueryLog());
         return $this->apiSuccess($list);
     }
