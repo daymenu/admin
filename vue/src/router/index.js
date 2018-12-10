@@ -49,19 +49,35 @@ export const constantRouterMap = [
     children: [
       {
         path: 'admin',
-        component: () => import('@/views/auth/admin/index'), // Parent router-view
+        component: () => import('@/views/auth/admin/list'), // Parent router-view
         name: 'admin',
-        meta: { title: '人员管理' }
+        meta: { title: '人员管理' },
+        children: [
+          {
+            path: 'edit',
+            component: () => import('@/views/auth/admin/edit'), // Parent router-view
+            name: 'edit',
+            meta: { title: '人员编辑' },
+            hidden: true
+          },
+          {
+            path: 'add',
+            component: () => import('@/views/auth/admin/create'), // Parent router-view
+            name: 'add',
+            meta: { title: '人员添加' },
+            hidden: true
+          }
+        ]
       },
       {
         path: 'role',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/auth/admin/index'),
         name: 'role',
         meta: { title: '角色管理' }
       },
       {
         path: 'menu',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
+        component: () => import('@/views/auth/admin/index'), // Parent router-view
         name: 'menu',
         meta: { title: '菜单管理' }
       },

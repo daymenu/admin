@@ -39,4 +39,3 @@ export function destroy(id) {
     method: 'delete'
   })
 }
-
