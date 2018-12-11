@@ -16,7 +16,7 @@
 
       <template v-for="child in item.children" v-if="!child.hidden">
         <sidebar-item
-          v-if="child.children&&child.children.length>0"
+          v-if="child.children&&child.children.length>0&&!allHiddenChild(child.children)"
           :is-nest="true"
           :item="child"
           :key="child.path"
@@ -74,6 +74,19 @@ export default {
         }
       })
       if (showingChildren.length === 1) {
+        return true
+      }
+      return false
+    },
+    allHiddenChild (children) {
+      const hiddenChildren = children.filter(item => {
+        if (item.hidden) {
+          return true
+        } else {
+          return false
+        }
+      })
+      if (hiddenChildren.length > 1) {
         return true
       }
       return false
