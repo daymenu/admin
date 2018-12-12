@@ -1,13 +1,16 @@
 <template>
-  <article-detail :is-edit="false"/>
+  <div>
+    <div class="header">人员添加</div>
+    <admin-detail :is-edit="false"/>
+  </div>
 </template>
 
 <script>
-import ArticleDetail from './components/ArticleDetail'
+import AdminDetail from './components/AdminDetail'
 
 export default {
-  name: 'CreateForm',
-  components: { ArticleDetail }
+  name: 'AdminCreate',
+  components: { AdminDetail }
 }
 </script>
 
