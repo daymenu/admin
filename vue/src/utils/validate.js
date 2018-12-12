@@ -36,3 +36,9 @@ export function validatEmail(str) {
   const reg = /([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
   return reg.test(str)
 }
+
+/* 密码*/
+export function validatPassword(str) {
+  const reg = /^[A-Za-z0-9]{6,20}$/
+  return reg.test(str)
+}

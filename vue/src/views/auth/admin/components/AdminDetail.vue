@@ -1,13 +1,56 @@
 <template>
   <div class="createPost-container">
-    <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
+    <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container" label-width="80px">
       <div class="createPost-main-container">
         <el-row>
           <!-- <Warning /> -->
-          <el-col :span="24">
+          <el-col :span="12">
             <el-form-item label="姓名" prop="name">
-              <el-input v-model="postForm.name" type="text" placeholder="请输入姓名"/>
+              <el-input v-model="postForm.name" type="text" placeholder="请输入姓名" clearable/>
             </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="昵称" prop="nickName">
+              <el-input v-model="postForm.nickName" type="text" placeholder="请输入昵称"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="邮箱" prop="email">
+              <el-input v-model="postForm.email" type="email" placeholder="请输入邮箱号"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="密码" prop="password">
+              <el-input v-model="postForm.password" type="password" placeholder="请输入密码，可以是数字或者字母，字符数为6~20"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="确认密码" prop="repassword">
+              <el-input v-model="postForm.repassword" type="password" placeholder="请再次输入密码"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="所属角色" prop="role">
+              <el-checkbox-group v-model="postForm.roles">
+                <el-checkbox v-for="(roleName, roleId) in roles" :label="roleId" :key="roleId">{{ roleName }}</el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-button type="primary" @click="submitForm">{{ btnName }}</el-button>
+            <el-button>取消</el-button>
           </el-col>
         </el-row>
       </div>
@@ -17,17 +60,18 @@
 </template>
 
 <script>
-import { store, show } from '@/api/auth/admin'
+import { store, show, update } from '@/api/auth/admin'
+import { validatPassword } from '@/utils/validate'
 
 const defaultForm = {
   id: undefined,
   name: '',
   email: '',
-  nick_name: '',
+  nickName: '',
   password: '',
   repassword: '',
   avatar: '',
-  role: [],
+  roles: [],
   status: 1
 }
 
@@ -41,14 +85,43 @@ export default {
     }
   },
   data() {
+    var vPassword = (rule, value, callback) => {
+      if (!validatPassword(value)) {
+        callback(new Error('请输入数字或字母并且在6~20个字符的密码'))
+      } else {
+        if (this.postForm.repassword !== '') {
+          this.$refs.postForm.validateField('repassword')
+        }
+        callback()
+      }
+    }
+    var vRePassword = (rule, value, callback) => {
+      if (!validatPassword(value)) {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.postForm.password) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
     return {
       postForm: Object.assign({}, defaultForm),
       loading: false,
       userListOptions: [],
       rules: {
-        name: [{ required: true, message: '请填写姓名', trigger: 'blur' }]
+        name: [{ required: true, message: '请填写姓名', trigger: 'blur' }],
+        email: [{ required: true, type: 'email', message: '请填写正确的邮箱地址', trigger: 'blur' }],
+        nickName: [{ required: true, message: '请填写昵称', trigger: 'blur' }],
+        password: [{ required: true, validator: vPassword, trigger: 'blur' }],
+        repassword: [{ required: true, validator: vRePassword, trigger: 'blur' }]
       },
-      tempRoute: {}
+      roles: { 1: '管理员', 2: '编辑' },
+      postFormRoute: {}
+    }
+  },
+  computed: {
+    btnName: function() {
+      return this.isEdit ? '编辑' : '添加'
     }
   },
   created() {
@@ -62,7 +135,7 @@ export default {
     // Why need to make a copy of this.$route here?
     // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
     // https://github.com/PanJiaChen/vue-element-admin/issues/1221
-    this.tempRoute = Object.assign({}, this.$route)
+    this.postFormRoute = Object.assign({}, this.$route)
   },
   methods: {
     fetchData(id) {
@@ -77,16 +150,30 @@ export default {
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
-          store(this.temp).then((res) => {
-            this.$notify({
-              title: '成功',
-              message: '创建成功',
-              type: 'success',
-              duration: 2000
+          if (this.isEdit) {
+            update(this.postForm).then((res) => {
+              this.$notify({
+                title: '成功',
+                message: '创建成功',
+                type: 'success',
+                duration: 2000
+              })
+            }).catch(error => {
+              console.log(error)
             })
-          }).catch(error => {
-            console.log(error)
-          })
+          } else {
+            store(this.postForm).then((res) => {
+              this.$notify({
+                title: '成功',
+                message: '创建成功',
+                type: 'success',
+                duration: 2000
+              })
+            }).catch(error => {
+              console.log(error)
+            })
+          }
+
           this.loading = false
         } else {
           console.log('error submit!!')

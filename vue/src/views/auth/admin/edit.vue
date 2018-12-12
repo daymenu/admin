@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div class="header">人员编辑</div>
     <admin-detail :is-edit="true"/>
   </div>
 </template>
