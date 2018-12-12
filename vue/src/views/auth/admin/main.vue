@@ -1,7 +1,5 @@
 <template>
-  <div class="admin-wrap">
-    <router-view/>
-  </div>
+  <router-view/>
 </template>
 
 <script>
