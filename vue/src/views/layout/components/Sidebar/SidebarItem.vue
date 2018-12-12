@@ -78,7 +78,7 @@ export default {
       }
       return false
     },
-    allHiddenChild (children) {
+    allHiddenChild(children) {
       const hiddenChildren = children.filter(item => {
         if (item.hidden) {
           return true

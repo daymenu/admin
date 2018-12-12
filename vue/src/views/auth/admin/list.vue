@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    <router-view/>
     <div class="filter-container">
       <el-input v-model="listQuery.search" placeholder="请输入邮箱号/姓名" style="width: 200px;" class="filter-item"/>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="search">搜索</el-button>

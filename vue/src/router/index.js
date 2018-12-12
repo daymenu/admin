@@ -49,10 +49,17 @@ export const constantRouterMap = [
     children: [
       {
         path: 'admin',
-        component: () => import('@/views/auth/admin/list'), // Parent router-view
+        component: () => import('@/views/auth/admin/main'), // Parent router-view
         name: 'admin',
         meta: { title: '人员管理' },
         children: [
+          {
+            path: '',
+            component: () => import('@/views/auth/admin/list'), // Parent router-view
+            name: 'adminlist',
+            meta: { title: '人员列表' },
+            hidden: true
+          },
           {
             path: 'edit',
             component: () => import('@/views/auth/admin/edit'), // Parent router-view
