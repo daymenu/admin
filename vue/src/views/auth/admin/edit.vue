@@ -1,14 +1,16 @@
 <template>
-  <div class="head">大家好。我是人員管理的編輯頁面</div>
-  <!-- <article-detail :is-edit="true"/> -->
+  <div>
+    <div class="header">人员编辑</div>
+    <admin-detail :is-edit="true"/>
+  </div>
 </template>
 
 <script>
-import ArticleDetail from './components/ArticleDetail'
+import AdminDetail from './components/AdminDetail'
 
 export default {
-  name: 'EditForm',
-  components: { ArticleDetail }
+  name: 'AdminEdit',
+  components: { AdminDetail }
 }
 </script>
 

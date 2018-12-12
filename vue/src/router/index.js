@@ -61,7 +61,7 @@ export const constantRouterMap = [
             hidden: true
           },
           {
-            path: 'edit',
+            path: 'edit/:id',
             component: () => import('@/views/auth/admin/edit'), // Parent router-view
             name: 'edit',
             meta: { title: '人员编辑' },
