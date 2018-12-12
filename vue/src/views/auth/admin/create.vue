@@ -1,16 +1,13 @@
 <template>
-  <div>
-    <div class="header">我是人員管理的添加頁面</div>
-    <!-- <article-detail :is-edit="false"/> -->
-  </div>
+  <article-detail :is-edit="false"/>
 </template>
 
 <script>
-// import ArticleDetail from './components/ArticleDetail'
+import ArticleDetail from './components/ArticleDetail'
 
 export default {
-  name: 'CreateForm'
-  // components: { ArticleDetail }
+  name: 'CreateForm',
+  components: { ArticleDetail }
 }
 </script>
 
