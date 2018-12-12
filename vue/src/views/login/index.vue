@@ -76,6 +76,9 @@ export default {
       immediate: true
     }
   },
+  created: function() {
+    console.log(this.$route)
+  },
   methods: {
     showPwd() {
       if (this.pwdType === 'password') {

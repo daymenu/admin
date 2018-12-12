@@ -2,7 +2,7 @@
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <el-menu
       :show-timeout="200"
-      :default-active="$route.path"
+      :default-active="defaultActive"
       :collapse="isCollapse"
       mode="vertical"
       background-color="#304156"
@@ -29,6 +29,13 @@ export default {
     },
     isCollapse() {
       return !this.sidebar.opened
+    },
+    defaultActive() {
+      var route = this.$route
+      if (route.meta.nonMenu) {
+        return route.matched[1].path
+      }
+      return route.path
     }
   }
 }

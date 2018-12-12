@@ -22,8 +22,8 @@ Vue.use(Router)
   }
 **/
 export const constantRouterMap = [
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
+  { path: '/login', component: () => import('@/views/login/index'), name: 'login', hidden: true },
+  { path: '/404', component: () => import('@/views/404'), name: '404', hidden: true },
 
   {
     path: '/',
@@ -57,21 +57,21 @@ export const constantRouterMap = [
             path: '',
             component: () => import('@/views/auth/admin/list'), // Parent router-view
             name: 'adminList',
-            meta: { title: '人员列表' },
+            meta: { title: '人员列表', nonMenu: true },
             hidden: true
           },
           {
             path: 'edit/:id',
             component: () => import('@/views/auth/admin/edit'), // Parent router-view
             name: 'adminEdit',
-            meta: { title: '人员编辑' },
+            meta: { title: '人员编辑', nonMenu: true },
             hidden: true
           },
           {
             path: 'add',
             component: () => import('@/views/auth/admin/create'), // Parent router-view
             name: 'adminAdd',
-            meta: { title: '人员添加' },
+            meta: { title: '人员添加', nonMenu: true },
             hidden: true
           }
         ]
