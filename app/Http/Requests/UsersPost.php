@@ -24,7 +24,11 @@ class UsersPost extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:posts|max:255',
+            'name' => 'required|unique:posts|max:255',
+            'user_name' => 'required|unique:posts|max:255',
+            'email' => 'required|unique:posts|max:255',
+            'password' => 'required|unique:posts|max:255',
+            'repassowrd' => 'required|unique:posts|max:255',
         ];
     }
 }

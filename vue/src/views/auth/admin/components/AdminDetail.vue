@@ -12,8 +12,15 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="昵称" prop="nickName">
-              <el-input v-model="postForm.nickName" type="text" placeholder="请输入昵称"/>
+            <el-form-item label="用户名" prop="user_name">
+              <el-input v-model="postForm.user_name" type="text" placeholder="请输入用户名"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="昵称" prop="nick_name">
+              <el-input v-model="postForm.nick_name" type="text" placeholder="请输入昵称"/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -67,7 +74,8 @@ const defaultForm = {
   id: undefined,
   name: '',
   email: '',
-  nickName: '',
+  nick_name: '',
+  user_name: '',
   password: '',
   repassword: '',
   avatar: '',
@@ -110,8 +118,9 @@ export default {
       userListOptions: [],
       rules: {
         name: [{ required: true, message: '请填写姓名', trigger: 'blur' }],
+        user_name: [{ required: true, message: '请填写姓名', trigger: 'blur' }],
         email: [{ required: true, type: 'email', message: '请填写正确的邮箱地址', trigger: 'blur' }],
-        nickName: [{ required: true, message: '请填写昵称', trigger: 'blur' }],
+        nick_name: [{ required: true, message: '请填写昵称', trigger: 'blur' }],
         password: [{ required: true, validator: vPassword, trigger: 'blur' }],
         repassword: [{ required: true, validator: vRePassword, trigger: 'blur' }]
       },
@@ -151,7 +160,7 @@ export default {
         if (valid) {
           this.loading = true
           if (this.isEdit) {
-            update(this.postForm).then((res) => {
+            update(this.postForm.id, this.postForm).then((res) => {
               this.$notify({
                 title: '成功',
                 message: '创建成功',

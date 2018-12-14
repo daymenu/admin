@@ -17,12 +17,11 @@ class ApiController extends Controller
     public function index(Request $request, Api $api)
     {
         $search = $request->input('search');
-        DB::enableQueryLog();
         if ($search) {
             $api = $api->where('name', 'like', '%' . $search . '%');
         }
         $list = $api->orderBy('id', 'desc')->paginate($request->input('limit'));
-        //dd(DB::getQueryLog());
+        
         return $this->apiSuccess($list);
     }
 

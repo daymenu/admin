@@ -20,14 +20,24 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="姓名" prop="name" align="center">
+      <el-table-column label="用户名" prop="user_name" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.name }}</span>
+          <span>{{ scope.row.user_name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="邮箱" prop="email" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.email }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="姓名" prop="name" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="昵称" prop="nick_name" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.nick_name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="添加时间" prop="created_at" align="center">

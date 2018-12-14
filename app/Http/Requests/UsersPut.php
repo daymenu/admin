@@ -24,7 +24,11 @@ class UsersPut extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:posts|max:255',
+            'name' => 'required|max:255',
+            'user_name' => 'required|alpha_dash|max:255',
+            'email' => 'required|email|',
+            'password' => '',
+            'repassowrd' => 'same:password|max:255',
         ];
     }
 }

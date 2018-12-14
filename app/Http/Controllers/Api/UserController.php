@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UsersPut;
+use App\Http\Requests\UsersPost;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -13,9 +15,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, User $user)
     {
-        return $this->apiSuccess(User::paginate($request->input('limit')));
+        $search = $request->input('search');
+        if ($search) {
+            $user = $user->where('name', 'like', '%' . $search . '%');
+        }
+        $list = $user->orderBy('id', 'desc')->paginate($request->input('limit'));
+        return $this->apiSuccess($list);
     }
 
     /**
@@ -24,9 +31,16 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsersPost $request, User $user)
     {
-        //
+        $validated = $request->validated();
+        $user->nick_name = (string)$request->input('nick_name');
+        $user->name = (string)$request->input('name');
+        $user->email = (string)$request->input('email');
+        $user->user_name = (string)$request->input('user_name');
+        $user->password = (string)$request->input('password');
+        $user->save();
+        return $this->apiSuccess($user);
     }
 
     /**
@@ -47,9 +61,16 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UsersPut $request, User $user)
     {
-        //
+        $validated = $request->validated();
+        $user->nick_name = (string)$request->input('nick_name');
+        $user->name = (string)$request->input('name');
+        $user->email = (string)$request->input('email');
+        $user->user_name = (string)$request->input('user_name');
+        $user->password = (string)$request->input('password');
+        $user->save();
+        return $this->apiSuccess($user);
     }
 
     /**
