@@ -26,10 +26,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/logout', 'Api\LoginController@logout')->name('admin.logout');
 
         Route::get('/user/info','Api\UserController@info')->name('user.info');
+        Route::get('/menu/select','Api\MenuController@menuSelect')->name('menu.select');
         
         Route::apiResources(array(
             '/user' => 'Api\UserController',
             '/api' => 'Api\ApiController',
+            '/menu' => 'Api\MenuController',
         ));
     });
 });

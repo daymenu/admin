@@ -50,7 +50,7 @@ export const constantRouterMap = [
       {
         path: 'admin',
         component: () => import('@/views/auth/admin/main'), // Parent router-view
-        name: 'admin',
+        name: 'authAdmin',
         meta: { title: '人员管理' },
         children: [
           {
@@ -84,7 +84,7 @@ export const constantRouterMap = [
       },
       {
         path: 'menu',
-        component: () => import('@/views/auth/admin/index'), // Parent router-view
+        component: () => import('@/views/auth/menu/index'), // Parent router-view
         name: 'menu',
         meta: { title: '菜单管理' }
       },

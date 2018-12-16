@@ -18,9 +18,12 @@ class UserController extends Controller
     public function index(Request $request, User $user)
     {
         $search = $request->input('search');
-        if ($search) {
-            $user = $user->where('name', 'like', '%' . $search . '%');
-        }
+        $user->where(function($query) use ($search){
+            if ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+                $query->where('email', 'like', '%' . $search . '%');
+            }
+        });
         $list = $user->orderBy('id', 'desc')->paginate($request->input('limit'));
         return $this->apiSuccess($list);
     }
@@ -68,7 +71,9 @@ class UserController extends Controller
         $user->name = (string)$request->input('name');
         $user->email = (string)$request->input('email');
         $user->user_name = (string)$request->input('user_name');
-        $user->password = (string)$request->input('password');
+        if ($request->input('password')) {
+            $user->password = (string)$request->input('password');
+        }
         $user->save();
         return $this->apiSuccess($user);
     }

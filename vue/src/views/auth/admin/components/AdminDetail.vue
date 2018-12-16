@@ -57,7 +57,7 @@
         <el-row>
           <el-col :span="24">
             <el-button type="primary" @click="submitForm">{{ btnName }}</el-button>
-            <el-button>取消</el-button>
+            <el-button @click="goList">取消</el-button>
           </el-col>
         </el-row>
       </div>
@@ -154,8 +154,11 @@ export default {
         console.log(err)
       })
     },
+    goList() {
+      this.$router.push({ name: 'authAdmin' })
+      // this.$router.back()
+    },
     submitForm() {
-      console.log(this.postForm)
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -163,10 +166,11 @@ export default {
             update(this.postForm.id, this.postForm).then((res) => {
               this.$notify({
                 title: '成功',
-                message: '创建成功',
+                message: '修改成功',
                 type: 'success',
                 duration: 2000
               })
+              this.goList()
             }).catch(error => {
               console.log(error)
             })
@@ -178,6 +182,7 @@ export default {
                 type: 'success',
                 duration: 2000
               })
+              this.goList()
             }).catch(error => {
               console.log(error)
             })
