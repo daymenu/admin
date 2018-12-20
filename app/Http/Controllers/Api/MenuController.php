@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MenuRequest;
 use DB;
+
 class MenuController extends Controller
 {
     /**
@@ -22,7 +23,7 @@ class MenuController extends Controller
         }
         $list = $menu->orderBy('id', 'desc')->paginate($request->input('limit'))->toArray();
         $kv = $menu->kv();
-        foreach($list['data'] as $k => $item){
+        foreach ($list['data'] as $k => $item) {
             $list['data'][$k]['pName'] = isset($kv[$item['pId']]) ? $kv[$item['pId']] : '一级菜单';
         }
         return $this->apiSuccess($list);
@@ -42,7 +43,7 @@ class MenuController extends Controller
         $menu->title = (string)$request->input('title');
         $menu->save();
         $names = $menu->kv([$menu->pId]);
-        $menu->pName = isset($names[$menu->pId])  ? $names[$menu->pId] : '一级菜单';
+        $menu->pName = isset($names[$menu->pId]) ? $names[$menu->pId] : '一级菜单';
         return $this->apiSuccess($menu);
     }
 
@@ -72,7 +73,7 @@ class MenuController extends Controller
         $menu->title = (string)$request->input('title');
         $menu->save();
         $names = $menu->kv([$menu->pId]);
-        $menu->pName = isset($names[$menu->pId])  ? $names[$menu->pId] : '一级菜单';
+        $menu->pName = isset($names[$menu->pId]) ? $names[$menu->pId] : '一级菜单';
         return $this->apiSuccess($menu);
     }
 

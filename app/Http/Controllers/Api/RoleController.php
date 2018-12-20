@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Api;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\ApiRequest;
 
-class ApiController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Api $api)
+    public function index(Request $request, Role $role)
     {
         $search = $request->input('search');
         if ($search) {
-            $api = $api->where('name', 'like', '%' . $search . '%');
+            $role = $role->where('name', 'like', '%' . $search . '%');
         }
-        $list = $api->orderBy('id', 'desc')->paginate($request->input('limit'));
+        $list = $role->orderBy('id', 'desc')->paginate($request->input('limit'));
         
         return $this->apiSuccess($list);
     }
@@ -35,8 +34,7 @@ class ApiController extends Controller
     {
         $validated = $request->validated();
         $api->name = (string)$request->input('name');
-        $api->route = (string)$request->input('route');
-        $api->url = (string)$request->input('url');
+        $menus = $request->input('menus');
         $api->save();
         return $this->apiSuccess($api);
     }
@@ -63,8 +61,7 @@ class ApiController extends Controller
     {
         $validated = $request->validated();
         $api->name = (string)$request->input('name');
-        $api->route = (string)$request->input('route');
-        $api->url = (string)$request->input('url');
+        $menus = $request->input('menus');
         $api->save();
         return $this->apiSuccess($api);
     }

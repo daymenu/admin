@@ -58,8 +58,10 @@
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="父菜单" prop="pId">
           <el-cascader
+            v-model="temp.pIds"
             :options="pIdOptions"
             :props="pIdProps"
+            :show-all-levels="false"
             placeholder="请选择父菜单"
             filterable
             change-on-select
@@ -115,10 +117,11 @@ export default {
         search: undefined
       },
       pIdOptions: [],
-      pIdProps: { lable: 'title', value: 'id' },
+      pIdProps: { label: 'title', value: 'id' },
       temp: {
         id: undefined,
         pId: 0,
+        pIds: [],
         name: '',
         title: ''
       },
@@ -162,9 +165,15 @@ export default {
         id: undefined,
         name: '',
         route: '',
+        pId: 0,
+        pIds: [],
         url: '',
         status: 1
       }
+    },
+    foramtTemp() {
+      const index = this.temp.pIds.length - 1
+      this.temp.pId = this.temp.pIds[index]
     },
     create() {
       this.resetTemp()
@@ -176,8 +185,10 @@ export default {
       })
     },
     store() {
+      console.log(this.temp)
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.foramtTemp()
           store(this.temp).then((res) => {
             this.list.unshift(res.data)
             this.dialogFormVisible = false
@@ -205,6 +216,7 @@ export default {
     update() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.foramtTemp()
           const tempData = Object.assign({}, this.temp)
           tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           update(tempData.id, tempData).then((response) => {
