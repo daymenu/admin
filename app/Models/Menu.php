@@ -40,7 +40,7 @@ class Menu extends Model
         $tree = [];
         foreach ($menus[$pId] as $id => $item) {
             if (isset($menus[$item->id])) {
-                $item->chindren = $this->tree($menus, $item->id);
+                $item->children = $this->tree($menus, $item->id);
             }
             $tree[] = $item;
         }
