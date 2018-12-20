@@ -16,7 +16,6 @@ class MenuController extends Controller
      */
     public function index(Request $request, Menu $menu)
     {
-        var_dump($menu->menuTree());
         $search = $request->input('search');
         if ($search) {
             $menu = $menu->where('name', 'like', '%' . $search . '%');
@@ -97,7 +96,8 @@ class MenuController extends Controller
      */
     public function menuSelect(Menu $menu)
     {
-        $menuRows = $menu->select('id','title')->get();
+        $menuRows = $menu->menuTree();
         return $this->apiSuccess($menuRows);
     }
+
 }

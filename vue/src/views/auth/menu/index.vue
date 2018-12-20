@@ -57,13 +57,13 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="父菜单" prop="pId">
-          <el-select v-model="temp.pId" filterable placeholder="请选择父菜单">
-            <el-option
-              v-for="item in pIdOptions"
-              :key="item.id"
-              :label="item.title"
-              :value="item.id"/>
-          </el-select>
+          <el-cascader
+            :options="pIdOptions"
+            :props="pIdProps"
+            placeholder="请选择父菜单"
+            filterable
+            change-on-select
+          />
         </el-form-item>
       </el-form>
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
@@ -115,6 +115,7 @@ export default {
         search: undefined
       },
       pIdOptions: [],
+      pIdProps: { lable: 'title', value: 'id' },
       temp: {
         id: undefined,
         pId: 0,
@@ -147,8 +148,9 @@ export default {
     },
     getMenuSelect() {
       menuSelect().then(response => {
-        const menus = [{ id: 0, title: '作为一级菜单' }]
-        this.pIdOptions = menus.concat(response.data)
+        // const menus = [{ id: 0, title: '作为一级菜单' }]
+        // this.pIdOptions = menus.concat(response.data)
+        this.pIdOptions = response.data
       })
     },
     search() {

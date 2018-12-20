@@ -24,30 +24,25 @@ class Menu extends Model
         return $kv;
     }
 
-    public function getTreeSelect()
-    {
-    }
-
     public function menuTree()
     {
-        $menuRows = $this->select('id','title')->get();
-
+        $menuRows = $this->select('id','pId', 'title')->get();
         $nodes = [];
         foreach($menuRows as $item){
             $nodes[$item->pId][] = $item;
         }
 
-        return $this->tree($menuRows);
+        return $this->tree($nodes);
     }
 
     public function tree($menus, $pId = 0)
     {
         $tree = [];
         foreach ($menus[$pId] as $id => $item) {
-            if (isset($menus)) {
+            if (isset($menus[$item->id])) {
                 $item->chindren = $this->tree($menus, $item->id);
             }
-            $tree[$item->id] = $item;
+            $tree[] = $item;
         }
         return $tree;
     }
