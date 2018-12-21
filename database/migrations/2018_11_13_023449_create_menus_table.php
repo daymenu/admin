@@ -21,6 +21,7 @@ class CreateMenusTable extends Migration
             $table->string('icon')->default('')->comment('菜单图标名称');
             $table->string('redirect')->default('')->comment('重定向路由');
             $table->integer('pId')->default(1)->comment('父菜单ID');
+            $table->string('pIds', 1000)->default('[]')->comment('父菜单ID路径');
             $table->tinyInteger('type')->default(1)->comment('菜单类别 1 菜单 2 按钮');
             $table->tinyInteger('always_show')->default(1)->comment('菜单置顶 1 是 2 否');
             $table->tinyInteger('hidden')->default(1)->comment('菜单隐藏 1 是 2 否');

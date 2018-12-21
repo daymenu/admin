@@ -15,6 +15,8 @@ class CreateApisTable extends Migration
     {
         Schema::create('apis', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('pId')->default(1)->comment('父菜单ID');
+            $table->string('pIds', 1000)->default('[]')->comment('父菜单ID路径');
             $table->string('name')->default('')->comment('接口名称');
             $table->string('route')->default('')->comment('路由');
             $table->string('url')->default('')->comment('接口地址');

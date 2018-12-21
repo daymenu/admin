@@ -18,6 +18,11 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="模块名" prop="name" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.pName }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="接口名称" prop="name" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
@@ -56,6 +61,19 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="父菜单" prop="pId">
+          <el-cascader
+            v-model="temp.pIds"
+            :options="pIdOptions"
+            :props="pIdProps"
+            :show-all-levels="false"
+            placeholder="请选择父菜单"
+            filterable
+            change-on-select
+          />
+        </el-form-item>
+      </el-form>
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="接口名称" prop="name">
           <el-input v-model="temp.name" type="text" placeholder="请输入接口名称"/>
         </el-form-item>
@@ -80,7 +98,7 @@
 </template>
 
 <script>
-import { getList, store, update, destroy } from '@/api/auth/api'
+import { getList, store, update, destroy, apiTree } from '@/api/auth/api'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import waves from '@/directive/waves' // Waves directive
 export default {
@@ -109,16 +127,15 @@ export default {
         search: undefined
       },
       statusOptions: ['published', 'draft', 'deleted'],
+      pIdOptions: [],
+      pIdProps: { label: 'name', value: 'id' },
       temp: {
         id: undefined,
         name: '',
-        email: '',
-        nick_name: '',
-        password: '',
-        repassword: '',
-        avatar: '',
-        role: [],
-        status: 1
+        pId: 0,
+        pIds: [],
+        route: '',
+        url: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -154,12 +171,30 @@ export default {
         id: undefined,
         name: '',
         route: '',
+        pId: 0,
+        pIds: [],
         url: '',
         status: 1
       }
     },
+    getTree() {
+      apiTree().then(response => {
+        // const menus = [{ id: 0, title: '作为一级菜单' }]
+        // this.pIdOptions = menus.concat(response.data)
+        this.pIdOptions = response.data
+      })
+    },
+    foramtTemp() {
+      const index = this.temp.pIds.length - 1
+      if (index < 0) {
+        this.temp.pId = 0
+      } else {
+        this.temp.pId = this.temp.pIds[index]
+      }
+    },
     create() {
       this.resetTemp()
+      this.getTree()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -169,6 +204,7 @@ export default {
     store() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.foramtTemp()
           store(this.temp).then((res) => {
             this.list.unshift(res.data)
             this.dialogFormVisible = false
@@ -186,6 +222,7 @@ export default {
     },
     edit(row) {
       this.temp = Object.assign({}, row) // copy obj
+      this.getTree()
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -195,6 +232,7 @@ export default {
     update() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.foramtTemp()
           const tempData = Object.assign({}, this.temp)
           tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           update(tempData.id, tempData).then(() => {

@@ -14,10 +14,10 @@ class CreateRoleMenusTable extends Migration
     public function up()
     {
         Schema::create('role_menus', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('role_id')->index()->default(0)->comment('角色ID');
             $table->integer('menu_id')->index()->default(0)->comment('菜单ID');
             $table->timestamps();
+            $table->primary(['menu_id', 'menu_id']);
             $table->softDeletes();
         });
     }

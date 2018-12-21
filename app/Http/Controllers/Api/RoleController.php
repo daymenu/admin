@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Role;
+use App\Models\MenuApi;
+use App\Models\RoleMenu;
 use Illuminate\Http\Request;
+use App\Http\Requests\RoleRequest;
 use App\Http\Controllers\Controller;
 
 class RoleController extends Controller
@@ -20,7 +23,7 @@ class RoleController extends Controller
             $role = $role->where('name', 'like', '%' . $search . '%');
         }
         $list = $role->orderBy('id', 'desc')->paginate($request->input('limit'));
-        
+
         return $this->apiSuccess($list);
     }
 
@@ -30,51 +33,90 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ApiRequest $request, Api $api)
+    public function store(RoleRequest $request, Role $role)
     {
         $validated = $request->validated();
-        $api->name = (string)$request->input('name');
-        $menus = $request->input('menus');
-        $api->save();
-        return $this->apiSuccess($api);
+        $role->name = (string)$request->input('name');
+        $menus = $request->input('menuIds');
+        $role->save();
+
+        $roleMenu = new RoleMenu();
+        $insertData = [];
+        if ($menus) {
+            foreach ($menus as $menuId) {
+                $insertData[] = [
+                    'role_id' => $role->id,
+                    'menu_id' => $menuId
+                ];
+            }
+        }
+        $roleMenu->insert($insertData);
+        return $this->apiSuccess($role);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Api  $api
+     * @param  \App\Models\Api  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(Api $api)
+    public function show(Role $role)
     {
-        return $this->apiSuccess($api);
+        return $this->apiSuccess($role);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Api  $api
+     * @param  \App\Models\Api  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(ApiRequest $request, Api $api)
+    public function update(RoleRequest $request, Role $role)
     {
         $validated = $request->validated();
-        $api->name = (string)$request->input('name');
-        $menus = $request->input('menus');
-        $api->save();
-        return $this->apiSuccess($api);
+        $role->name = (string)$request->input('name');
+        $menus = $request->input('menuIds');
+        $role->save();
+        $roleMenu = new RoleMenu();
+        $roleMenu->where('role_id', $role->id)->delete();
+        $insertData = [];
+        if ($menus) {
+            foreach ($menus as $menuId) {
+                $insertData[] = [
+                    'role_id' => $role->id,
+                    'menu_id' => $menuId
+                ];
+            }
+        }
+        $roleMenu->insert($insertData);
+        return $this->apiSuccess($role);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Api  $api
+     * @param  \App\Models\Api  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Api $api)
+    public function destroy(Role $role)
     {
-        $api->delete();
-        return $this->apiSuccess($api);
+        $role->delete();
+        return $this->apiSuccess($role);
+    }
+    /**
+     * 菜单对应的API
+     *
+     * @param Menu $menu
+     * @return void
+     */
+    public function menuIds(Request $request, RoleMenu $roleMenu)
+    {
+        $id = $request->get('roleId');
+        $data = $roleMenu->where('role_id', $id)->select('menu_id')->get()->toArray();
+        if ($data) {
+            $data = array_column($data, 'menu_id');
+        }
+        return $this->apiSuccess($data);
     }
 }

@@ -14,10 +14,10 @@ class CreateMenuApisTable extends Migration
     public function up()
     {
         Schema::create('menu_apis', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('menu_id')->index()->default(0)->comment('菜单ID');
             $table->integer('api_id')->index()->default(0)->comment('apiID');
             $table->timestamps();
+            $table->primary(['menu_id', 'api_id']);
             $table->softDeletes();
         });
     }

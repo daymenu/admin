@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const baseUrl = '/api/admin/api'
+const baseUrl = '/api/admin/role'
 
 export function getList(search) {
   return request({
@@ -17,10 +17,11 @@ export function show(id) {
   })
 }
 
-export function apiTree(id) {
+export function menuIds(roleId) {
   return request({
-    url: baseUrl + '/tree',
-    method: 'get'
+    url: baseUrl + '/menuIds',
+    method: 'get',
+    params: { roleId: roleId }
   })
 }
 

@@ -19,24 +19,40 @@ export function show(id) {
 
 export function menuSelect(id) {
   return request({
-    url: baseUrl + '/select',
+    url: baseUrl + '/tree',
     method: 'get'
   })
 }
 
-export function store(user) {
+export function apiIds(id) {
   return request({
-    url: baseUrl,
-    method: 'post',
-    data: user
+    url: baseUrl + '/apis',
+    method: 'get',
+    params: { id: id }
   })
 }
 
-export function update(id, user) {
+export function store(data) {
+  return request({
+    url: baseUrl,
+    method: 'post',
+    data: data
+  })
+}
+
+export function addApis(data) {
+  return request({
+    url: baseUrl + '/addApis',
+    method: 'post',
+    data: data
+  })
+}
+
+export function update(id, data) {
   return request({
     url: baseUrl + '/' + id,
     method: 'put',
-    data: user
+    data: data
   })
 }
 

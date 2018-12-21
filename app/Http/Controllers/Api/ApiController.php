@@ -20,8 +20,14 @@ class ApiController extends Controller
         if ($search) {
             $api = $api->where('name', 'like', '%' . $search . '%');
         }
-        $list = $api->orderBy('id', 'desc')->paginate($request->input('limit'));
-        
+        $list = $api->orderBy('id', 'desc')->paginate($request->input('limit'))->toArray();
+        if ($list['data']) {
+            $kv = $api->kv();
+            foreach ($list['data'] as $k => $item) {
+                $list['data'][$k]['pName'] = isset($kv[$item['pId']]) ? $kv[$item['pId']] : '';
+                $list['data'][$k]['pIds'] = json_decode($item['pIds'], true);
+            }
+        }
         return $this->apiSuccess($list);
     }
 
@@ -34,10 +40,17 @@ class ApiController extends Controller
     public function store(ApiRequest $request, Api $api)
     {
         $validated = $request->validated();
+        $api->pId = (int)$request->input('pId');
+        $pIds = $request->input('pIds');
+        $pIdsArr = $pIds ? $pIds : [];
+        $api->pIds = json_encode($pIdsArr);
         $api->name = (string)$request->input('name');
         $api->route = (string)$request->input('route');
         $api->url = (string)$request->input('url');
         $api->save();
+        $names = $api->kv([$api->pId]);
+        $api->pName = isset($names[$api->pId]) ? $names[$api->pId] : '';
+        $api->pIds = json_decode($api->pIds, true);
         return $this->apiSuccess($api);
     }
 
@@ -62,10 +75,17 @@ class ApiController extends Controller
     public function update(ApiRequest $request, Api $api)
     {
         $validated = $request->validated();
+        $api->pId = (int)$request->input('pId');
+        $pIds = $request->input('pIds');
+        $pIdsArr = $pIds ? $pIds : [];
+        $api->pIds = json_encode($pIdsArr);
         $api->name = (string)$request->input('name');
         $api->route = (string)$request->input('route');
         $api->url = (string)$request->input('url');
         $api->save();
+        $names = $api->kv([$api->pId]);
+        $api->pName = isset($names[$api->pId]) ? $names[$api->pId] : '';
+        $api->pIds = json_decode($api->pIds, true);
         return $this->apiSuccess($api);
     }
 
@@ -79,5 +99,16 @@ class ApiController extends Controller
     {
         $api->delete();
         return $this->apiSuccess($api);
+    }
+    /**
+     * 菜单select框
+     *
+     * @param Menu $menu
+     * @return void
+     */
+    public function tree(Api $api)
+    {
+        $rows = $api->apiTree();
+        return $this->apiSuccess($rows);
     }
 }

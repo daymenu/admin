@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.search" placeholder="菜单名称" style="width: 200px;" class="filter-item"/>
+      <el-input v-model="listQuery.search" placeholder="角色名称" style="width: 200px;" class="filter-item"/>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="create">添加</el-button>
     </div>
@@ -18,17 +18,7 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="菜单名称" prop="title" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.title }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="父菜单" prop="pName" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.pName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="路由名称" prop="name" align="center">
+      <el-table-column label="角色名称" prop="name" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
         </template>
@@ -45,7 +35,6 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="success" size="mini" @click="apiShow(scope.row)">接口</el-button>
           <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" @click="deleteRow(scope.row)">删除
           </el-button>
@@ -57,26 +46,20 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="父菜单" prop="pId">
-          <el-cascader
-            v-model="temp.pIds"
-            :options="pIdOptions"
-            :props="pIdProps"
-            :show-all-levels="false"
-            placeholder="请选择父菜单"
-            filterable
-            change-on-select
-          />
+        <el-form-item label="角色名称" prop="name">
+          <el-input v-model="temp.name" type="text" placeholder="请输入角色名称"/>
         </el-form-item>
       </el-form>
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="路由名称" prop="name">
-          <el-input v-model="temp.name" type="text" placeholder="请输入路由名称"/>
-        </el-form-item>
-      </el-form>
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="菜单名称" prop="title">
-          <el-input v-model="temp.title" type="text" placeholder="菜单名称"/>
+        <el-form-item label="菜单" prop="pId">
+          <el-tree
+            ref="tree"
+            :data="menuOptions"
+            :props="menuProps"
+            show-checkbox
+            default-expand-all
+            node-key="id"
+            highlight-current/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -85,30 +68,12 @@
       </div>
     </el-dialog>
 
-    <el-dialog :visible.sync="apiFormVisible" title="修改接口信息">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="父菜单" prop="pId">
-          <el-tree
-            ref="tree"
-            :data="apiTree"
-            :props="apiProps"
-            show-checkbox
-            default-expand-all
-            node-key="id"
-            highlight-current/>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="updateApi()">修改</el-button>
-        <el-button @click="apiFormVisible = false">取消</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getList, store, update, destroy, menuSelect, addApis, apiIds } from '@/api/auth/menu'
-import { apiTree } from '@/api/auth/api'
+import { getList, store, update, destroy, menuIds } from '@/api/auth/role'
+import { menuSelect } from '@/api/auth/menu'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import waves from '@/directive/waves' // Waves directive
 export default {
@@ -136,29 +101,24 @@ export default {
         limit: 10,
         search: undefined
       },
-      pIdOptions: [],
-      pIdProps: { label: 'title', value: 'id' },
-      apiProps: { label: 'name', value: 'id' },
-      apiTree: [],
-      menuId: 0,
-      selectedApi: [],
+      statusOptions: ['published', 'draft', 'deleted'],
+      menuOptions: [],
+      menuProps: { label: 'title', value: 'id' },
       temp: {
         id: undefined,
-        pId: 0,
-        pIds: [],
         name: '',
-        title: ''
+        menuIds: []
       },
       dialogFormVisible: false,
-      apiFormVisible: false,
       dialogStatus: '',
       textMap: {
         update: '修改',
         create: '添加'
       },
       rules: {
-        name: [{ required: true, message: '请填写路由名称', trigger: 'blur' }],
-        title: [{ required: true, message: '请填写菜单名称', trigger: 'blur' }]
+        name: [{ required: true, message: '请填写角色名称', trigger: 'blur' }],
+        route: [{ required: true, message: '请填写route', trigger: 'blur' }],
+        url: [{ required: true, message: '请填写角色链接', trigger: 'blur' }]
       }
     }
   },
@@ -174,13 +134,6 @@ export default {
         this.listLoading = false
       })
     },
-    getMenuSelect() {
-      menuSelect().then(response => {
-        // const menus = [{ id: 0, title: '作为一级菜单' }]
-        // this.pIdOptions = menus.concat(response.data)
-        this.pIdOptions = response.data
-      })
-    },
     search() {
       this.listQuery.page = 1
       this.getList()
@@ -189,24 +142,22 @@ export default {
       this.temp = {
         id: undefined,
         name: '',
-        route: '',
-        pId: 0,
-        pIds: [],
-        url: '',
-        status: 1
+        menuIds: []
       }
     },
-    foramtTemp() {
-      const index = this.temp.pIds.length - 1
-      if (index < 0) {
-        this.temp.pId = 0
-      } else {
-        this.temp.pId = this.temp.pIds[index]
-      }
+    getTree(roleId) {
+      menuSelect().then(response => {
+        // const menus = [{ id: 0, title: '作为一级菜单' }]
+        // this.menuOptions = menus.concat(response.data)
+        this.menuOptions = response.data
+      })
+      menuIds(roleId).then(response => {
+        this.$refs.tree.setCheckedKeys(response.data)
+      })
     },
-    create() {
+    create(row) {
       this.resetTemp()
-      this.getMenuSelect()
+      this.getTree()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -214,10 +165,9 @@ export default {
       })
     },
     store() {
-      console.log(this.temp)
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.foramtTemp()
+          this.temp.menuIds = this.$refs.tree.getCheckedKeys()
           store(this.temp).then((res) => {
             this.list.unshift(res.data)
             this.dialogFormVisible = false
@@ -235,7 +185,7 @@ export default {
     },
     edit(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.getMenuSelect()
+      this.getTree(this.temp.id)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -245,14 +195,14 @@ export default {
     update() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.foramtTemp()
+          this.temp.menuIds = this.$refs.tree.getCheckedKeys()
           const tempData = Object.assign({}, this.temp)
           tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          update(tempData.id, tempData).then((response) => {
+          update(tempData.id, tempData).then(() => {
             for (const v of this.list) {
               if (v.id === this.temp.id) {
                 const index = this.list.indexOf(v)
-                this.list.splice(index, 1, response.data)
+                this.list.splice(index, 1, this.temp)
                 break
               }
             }
@@ -265,31 +215,6 @@ export default {
             })
           })
         }
-      })
-    },
-    apiShow(row) {
-      this.apiFormVisible = true
-      apiTree().then((response) => {
-        this.apiTree = response.data
-      })
-
-      apiIds(row.id).then((response) => {
-        this.$refs.tree.setCheckedKeys(response.data)
-      })
-      this.menuId = row.id
-    },
-    updateApi() {
-      const keys = this.$refs.tree.getCheckedKeys()
-      const pkeys = this.$refs.tree.getNodePath()
-      console.log(pkeys)
-      addApis({ menuId: this.menuId, apis: keys }).then((response) => {
-        this.apiFormVisible = false
-        this.$notify({
-          title: '成功',
-          message: '更新成功',
-          type: 'success',
-          duration: 2000
-        })
       })
     },
     deleteRow(row) {
