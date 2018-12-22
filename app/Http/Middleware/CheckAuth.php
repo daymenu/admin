@@ -15,7 +15,7 @@ class CheckAuth
      */
     public function handle($request, Closure $next)
     {
-        // return response()->json([1,2,3]);
+        $userId = $request->user()->id;
         return $next($request);
     }
 }

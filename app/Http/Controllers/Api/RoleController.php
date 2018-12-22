@@ -113,10 +113,7 @@ class RoleController extends Controller
     public function menuIds(Request $request, RoleMenu $roleMenu)
     {
         $id = $request->get('roleId');
-        $data = $roleMenu->where('role_id', $id)->select('menu_id')->get()->toArray();
-        if ($data) {
-            $data = array_column($data, 'menu_id');
-        }
+        $data = $roleMenu->where('role_id', $id)->pluck('menu_id');
         return $this->apiSuccess($data);
     }
 

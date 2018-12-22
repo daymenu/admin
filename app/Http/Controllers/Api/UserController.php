@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Menu;
 use App\Models\User;
+use App\Models\RoleMenu;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
 use App\Http\Requests\UsersPut;
@@ -68,10 +70,9 @@ class UserController extends Controller
      */
     public function show(User $user, UserRole $userRole)
     {
-        $roles = $userRole->where('user_id', $user->id)->select('role_id')->get()->toArray();
+        $roles = $userRole->where('user_id', $user->id)->pluck('role_id')->toArray();
         if ($user) {
-            $user->roles = array_column($roles, 'role_id');
-            $user->roles = array_map(function($id){return (string)$id;}, $user->roles);
+            $user->roles = array_map(function($id){return (string)$id;}, $roles);
         }
         return $this->apiSuccess($user);
     }
@@ -134,8 +135,18 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function info(Request $request)
+    public function info(Request $request, User $user)
     {
+        $userId = $request->user()->id;
+        $menus = $user->menuIds($userId);
+        var_dump($menus);
         return $this->apiSuccess($request->user());
+    }
+
+    public function menus(Request $request)
+    {
+        $userId = $request->user()->id;
+        $menus = $user->menuIds($userId);
+        return $this->apiSuccess($menus);
     }
 }

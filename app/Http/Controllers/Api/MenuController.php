@@ -121,10 +121,7 @@ class MenuController extends Controller
     public function apis(Request $request, MenuApi $menuApi)
     {
         $menuId = $request->get('id');
-        $apis = $menuApi->where('menu_id', $menuId)->select('api_id')->get()->toArray();
-        if ($apis) {
-            $apis = array_column($apis, 'api_id');
-        }
+        $apis = $menuApi->where('menu_id', $menuId)->pluck('api_id');
         return $this->apiSuccess($apis);
     }
 
