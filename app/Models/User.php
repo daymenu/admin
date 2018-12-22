@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Api;
+use App\Models\MenuApi;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -43,15 +45,15 @@ class User extends Authenticatable
         foreach ($menus as $item) {
             $menuKv[$item->id] = $item;
         }
-        $allIds = $menuIds;
+
+        $allIds = [];
         foreach ($menuIds as $menuId) {
+            $allIds[$menuId] = $menuId;
             $pIds = $this->findParendIds($menuKv, $menuId);
             if ($pIds) {
                 $allIds  =  $allIds + $pIds;
-                var_dump($pIds);
             }
         }
-        var_dump($allIds);die();
         $priMenus = [];
         foreach ($allIds as $id) {
             $priMenus[] = $menuKv[$id];
@@ -61,17 +63,50 @@ class User extends Authenticatable
 
     public function findParendIds($menus, $menuId)
     {
-        $menuIds = [$menuId];
+        $menuIds[$menuId] = $menuId;
         if ($menus[$menuId]->pId == 0) {
             return $menuIds;
         } else {
-            $menuIds[] = $menus[$menuId]->pId;
+            $menuIds[$menus[$menuId]->pId] = $menus[$menuId]->pId;
             $pIds = $this->findParendIds($menus, $menus[$menuId]->pId);
-            
             if ($pIds) {
-                $menuIds += $pIds;
+                $menuIds = $menuIds + $pIds;
             }
             return $menuIds;
         }
+    }
+
+    public function allMenuIds($userId)
+    {
+        $userRole = new UserRole();
+        $roleMenu = new RoleMenu();
+        $menu = new Menu();
+        $roleIds = $userRole->where('user_id', $userId)->pluck('role_id');
+        $menuIds = $roleMenu->whereIn('role_id', $roleIds)->pluck('menu_id')->toArray();
+        $menus = $menu->select('id', 'pId', 'name')->get();
+        $menuKv = [];
+        foreach ($menus as $item) {
+            $menuKv[$item->id] = $item;
+        }
+
+        $allIds = [];
+        foreach ($menuIds as $menuId) {
+            $allIds[$menuId] = $menuId;
+            $pIds = $this->findParendIds($menuKv, $menuId);
+            if ($pIds) {
+                $allIds  =  $allIds + $pIds;
+            }
+        }
+        return $allIds;
+    }
+
+    public function apis($userId)
+    {
+        $menuIds = $this->allMenuIds($userId);
+        $menuApi = new MenuApi();
+        $apiIds = $menuApi->whereIn('menu_id', $menuIds)->pluck('api_id');
+        $api = new Api();
+        return $api->whereIn('id', $apiIds)->pluck('route')->toArray();
+
     }
 }

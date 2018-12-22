@@ -139,7 +139,6 @@ class UserController extends Controller
     {
         $userId = $request->user()->id;
         $menus = $user->menuIds($userId);
-        var_dump($menus);
         return $this->apiSuccess($request->user());
     }
 

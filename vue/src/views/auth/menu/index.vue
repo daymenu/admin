@@ -172,6 +172,8 @@ export default {
         this.list = response.data.data
         this.total = response.data.total
         this.listLoading = false
+      }).catch(error => {
+        console.log(error)
       })
     },
     getMenuSelect() {
@@ -263,6 +265,8 @@ export default {
               type: 'success',
               duration: 2000
             })
+          }).catch(error => {
+            console.log(error)
           })
         }
       })

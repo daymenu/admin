@@ -151,10 +151,13 @@ export default {
     fetchData(id) {
       roleKv().then(response => {
         this.roles = response.data
+      }).catch(error => {
+        console.log(error)
       })
       show(id).then((response) => {
         this.postForm = response.data
-        console.log(this.postForm)
+      }).catch(error => {
+        console.log(error)
       })
     },
     goList() {
