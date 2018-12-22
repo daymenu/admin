@@ -119,4 +119,9 @@ class RoleController extends Controller
         }
         return $this->apiSuccess($data);
     }
+
+    public function kv(Role $role)
+    {
+        return $this->apiSuccess($role->kv());
+    }
 }

@@ -17,7 +17,7 @@ class CreateRoleMenusTable extends Migration
             $table->integer('role_id')->index()->default(0)->comment('角色ID');
             $table->integer('menu_id')->index()->default(0)->comment('菜单ID');
             $table->timestamps();
-            $table->primary(['menu_id', 'menu_id']);
+            $table->primary(['role_id', 'menu_id']);
             $table->softDeletes();
         });
     }

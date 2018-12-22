@@ -7,5 +7,4 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RoleMenu extends Model
 {
-    use SoftDeletes;
 }

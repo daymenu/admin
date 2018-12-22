@@ -14,11 +14,11 @@ class CreateUserRolesTable extends Migration
     public function up()
     {
         Schema::create('user_roles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->index()->default(0)->comment('人员ID');
-            $table->integer('role_id')->index()->default(0)->comment('角色ID');
+            $table->integer('user_id')->default(0)->comment('人员ID');
+            $table->integer('role_id')->default(0)->comment('角色ID');
             $table->timestamps();
             $table->softDeletes();
+            $table->primary(['user_id', 'role_id']);
         });
     }
 

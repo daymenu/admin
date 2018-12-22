@@ -25,6 +25,13 @@ export function menuIds(roleId) {
   })
 }
 
+export function roleKv() {
+  return request({
+    url: baseUrl + '/kv',
+    method: 'get'
+  })
+}
+
 export function store(user) {
   return request({
     url: baseUrl,

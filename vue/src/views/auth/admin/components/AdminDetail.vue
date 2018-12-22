@@ -68,6 +68,7 @@
 
 <script>
 import { store, show, update } from '@/api/auth/admin'
+import { roleKv } from '@/api/auth/role'
 import { validatPassword } from '@/utils/validate'
 
 const defaultForm = {
@@ -124,7 +125,7 @@ export default {
         password: [{ required: true, validator: vPassword, trigger: 'blur' }],
         repassword: [{ required: true, validator: vRePassword, trigger: 'blur' }]
       },
-      roles: { 1: '管理员', 2: '编辑' },
+      roles: [],
       postFormRoute: {}
     }
   },
@@ -148,15 +149,16 @@ export default {
   },
   methods: {
     fetchData(id) {
-      show(id).then(response => {
+      roleKv().then(response => {
+        this.roles = response.data
+      })
+      show(id).then((response) => {
         this.postForm = response.data
-      }).catch(err => {
-        console.log(err)
+        console.log(this.postForm)
       })
     },
     goList() {
-      this.$router.push({ name: 'authAdmin' })
-      // this.$router.back()
+      this.$router.back()
     },
     submitForm() {
       this.$refs.postForm.validate(valid => {

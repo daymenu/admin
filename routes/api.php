@@ -31,6 +31,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/menu/addApis', 'Api\MenuController@addApis')->name('menu.addApis');
         Route::get('/api/tree', 'Api\ApiController@tree')->name('api.tree');
         Route::get('/role/menuIds', 'Api\RoleController@menuIds')->name('role.menuIds');
+        Route::get('/role/kv', 'Api\RoleController@kv')->name('role.kv');
 
         Route::apiResources(array(
             '/user' => 'Api\UserController',

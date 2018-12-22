@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 use App\Http\Requests\UsersPut;
 use App\Http\Requests\UsersPost;
@@ -43,6 +44,19 @@ class UserController extends Controller
         $user->user_name = (string)$request->input('user_name');
         $user->password = (string)$request->input('password');
         $user->save();
+
+        $roles = $request->input('roles');
+        if ($roles) {
+            $userRole = new UserRole();
+            $insertData = [];
+            foreach ($roles as $roleId) {
+                $insertData[] = [
+                    'user_id' => $user->id,
+                    'role_id' => $roleId
+                ];
+            }
+            $userRole->insert($insertData);
+        }
         return $this->apiSuccess($user);
     }
 
@@ -52,8 +66,13 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user, UserRole $userRole)
     {
+        $roles = $userRole->where('user_id', $user->id)->select('role_id')->get()->toArray();
+        if ($user) {
+            $user->roles = array_column($roles, 'role_id');
+            $user->roles = array_map(function($id){return (string)$id;}, $user->roles);
+        }
         return $this->apiSuccess($user);
     }
 
@@ -75,6 +94,21 @@ class UserController extends Controller
             $user->password = (string)$request->input('password');
         }
         $user->save();
+
+        $userRole = new UserRole();
+        $userRole->where('user_id', $user->id)->delete();
+        $roles = $request->input('roles');
+        if ($roles) {
+            $insertData = [];
+            foreach ($roles as $roleId) {
+                $insertData[] = [
+                    'user_id' => $user->id,
+                    'role_id' => $roleId
+                ];
+            }
+            $userRole->insert($insertData);
+        }
+
         return $this->apiSuccess($user);
     }
 
