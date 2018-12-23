@@ -24,7 +24,8 @@ router.beforeEach((to, from, next) => {
         })
         if (store.getters.addRouters.length === 0) {
           store.dispatch('GenerateRoutes').then(res => {
-            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+            router.options.routes = store.getters.routers
+            router.addRoutes(store.getters.addRouters) // 这个是成功的但是不会反应到router.options.routes上
             next({ ...to, replace: true })
           }).catch(error => {
             console.log(error)
