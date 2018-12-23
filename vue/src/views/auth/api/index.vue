@@ -61,13 +61,13 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="父菜单" prop="pId">
+        <el-form-item label="父接口" prop="pId">
           <el-cascader
             v-model="temp.pIds"
             :options="pIdOptions"
             :props="pIdProps"
             :show-all-levels="false"
-            placeholder="请选择父菜单"
+            placeholder="请选择父接口"
             filterable
             change-on-select
           />

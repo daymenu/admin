@@ -21,10 +21,11 @@ class UserController extends Controller
     public function index(Request $request, User $user)
     {
         $search = $request->input('search');
-        $user->where(function($query) use ($search){
+        $user = $user->where(function($query) use ($search){
             if ($search) {
-                $query->where('name', 'like', '%' . $search . '%');
-                $query->where('email', 'like', '%' . $search . '%');
+                $query->orWhere('name', 'like', '%' . $search . '%');
+                $query->orWhere('user_name', 'like', '%' . $search . '%');
+                $query->orWhere('email', 'like', '%' . $search . '%');
             }
         });
         $list = $user->orderBy('id', 'desc')->paginate($request->input('limit'));

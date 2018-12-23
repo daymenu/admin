@@ -17,12 +17,17 @@ class ApiController extends Controller
     public function index(Request $request, Api $api)
     {
         $search = $request->input('search');
-        if ($search) {
-            $api = $api->where('name', 'like', '%' . $search . '%');
-        }
+        
+        $api = $api->where(function($query) use ($search){
+            if ($search) {
+                $query->orWhere('name', 'like', '%' . $search . '%');
+                $query->orWhere('route', 'like', '%' . $search . '%');
+                $query->orWhere('url', 'like', '%' . $search . '%');
+            }
+        });
         $list = $api->orderBy('id', 'desc')->paginate($request->input('limit'))->toArray();
         if ($list['data']) {
-            $kv = $api->kv();
+            $kv = (new Api)->kv();
             foreach ($list['data'] as $k => $item) {
                 $list['data'][$k]['pName'] = isset($kv[$item['pId']]) ? $kv[$item['pId']] : '';
                 $list['data'][$k]['pIds'] = json_decode($item['pIds'], true);

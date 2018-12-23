@@ -2,8 +2,11 @@ import { asyncRouterMap, constantRouterMap } from '@/router/'
 import { getRouteNames } from '@/api/auth/admin'
 
 function hasPermission(routeNames, route) {
-  if (route.name === '') {
+  if (!route.name || route.name === '') {
     return true
+  }
+  if (routeNames.indexOf(route.name) === -1) {
+    return false
   }
   return true
 }

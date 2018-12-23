@@ -18,7 +18,7 @@ const AuthRouter = {
     children: [{
       path: '',
       component: () => import('@/views/auth/admin/list'), // Parent router-view
-      // name: 'adminList',
+      name: 'adminList',
       meta: {
         title: '人员列表',
         nonMenu: true
@@ -50,7 +50,7 @@ const AuthRouter = {
   {
     path: 'role',
     component: () => import('@/views/auth/role/index'),
-    name: 'role',
+    name: 'authRole',
     meta: {
       title: '角色管理'
     }
@@ -58,7 +58,7 @@ const AuthRouter = {
   {
     path: 'menu',
     component: () => import('@/views/auth/menu/index'), // Parent router-view
-    name: 'menu',
+    name: 'autnMenu',
     meta: {
       title: '菜单管理'
     }
@@ -66,7 +66,7 @@ const AuthRouter = {
   {
     path: 'api',
     component: () => import('@/views/auth/api/index'), // Parent router-view
-    name: 'api',
+    name: 'authApi',
     meta: {
       title: '接口管理'
     }

@@ -22,7 +22,7 @@ class CheckAuth
         $routes = $user->apis($userId);
         $route = Route::currentRouteName();
         if (!in_array($route, $routes)) {
-        //    return response(['code' => 100010, 'message'=>'没有权限']);
+           return response(['code' => 100010, 'message'=>'没有权限']);
         }
         return $next($request);
     }

@@ -87,7 +87,7 @@
 
     <el-dialog :visible.sync="apiFormVisible" title="修改接口信息">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="父菜单" prop="pId">
+        <el-form-item label="请选择接口" prop="pId">
           <el-tree
             ref="tree"
             :data="apiTree"

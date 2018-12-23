@@ -18,10 +18,14 @@ class MenuController extends Controller
     public function index(Request $request, Menu $menu)
     {
         $search = $request->input('search');
-        if ($search) {
-            $menu = $menu->where('name', 'like', '%' . $search . '%');
-        }
-        $list = $menu->orderBy('id', 'desc')->paginate($request->input('limit'))->toArray();
+        
+        $menuModel = $menu->where(function($query) use ($search){
+            if ($search) {
+                $query->orWhere('title', 'like', '%' . $search . '%');
+                $query->orWhere('name', 'like', '%' . $search . '%');
+            }
+        });
+        $list = $menuModel->orderBy('id', 'desc')->paginate($request->input('limit'))->toArray();
         if ($list['data']) {
             $kv = $menu->kv();
             foreach ($list['data'] as $k => $item) {
