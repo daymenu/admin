@@ -37,7 +37,10 @@ export const constantRouterMap = [
       path: 'dashboard',
       component: () => import('@/views/dashboard/index')
     }]
-  },
+  }
+]
+
+export const asyncRouterMap = [
   authRouter,
   { path: '*', redirect: '/404', hidden: true }
 ]

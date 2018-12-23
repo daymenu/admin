@@ -142,7 +142,7 @@ class UserController extends Controller
         return $this->apiSuccess($request->user());
     }
 
-    public function menus(Request $request)
+    public function menuIds(Request $request, User $user)
     {
         $userId = $request->user()->id;
         $menus = $user->menuIds($userId);

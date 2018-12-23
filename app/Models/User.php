@@ -56,7 +56,7 @@ class User extends Authenticatable
         }
         $priMenus = [];
         foreach ($allIds as $id) {
-            $priMenus[] = $menuKv[$id];
+            $priMenus[] = $menuKv[$id]->name;
         }
         return $priMenus;
     }

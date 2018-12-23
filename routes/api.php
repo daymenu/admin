@@ -26,6 +26,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/logout', 'Api\LoginController@logout')->name('admin.logout');
 
         Route::get('/user/info', 'Api\UserController@info')->name('user.info');
+        Route::get('/user/menuIds', 'Api\UserController@menuIds')->name('user.menuIds');
         Route::get('/menu/tree', 'Api\MenuController@tree')->name('menu.tree');
         Route::get('/menu/apis', 'Api\MenuController@apis')->name('menu.apis');
         Route::post('/menu/addApis', 'Api\MenuController@addApis')->name('menu.addApis');

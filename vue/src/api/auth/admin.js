@@ -17,6 +17,13 @@ export function show(id) {
   })
 }
 
+export function getRouteNames() {
+  return request({
+    url: baseUrl + '/menuIds',
+    method: 'get'
+  })
+}
+
 export function store(user) {
   return request({
     url: baseUrl,

@@ -18,7 +18,7 @@ const AuthRouter = {
     children: [{
       path: '',
       component: () => import('@/views/auth/admin/list'), // Parent router-view
-      name: 'adminList',
+      // name: 'adminList',
       meta: {
         title: '人员列表',
         nonMenu: true

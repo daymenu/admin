@@ -22,6 +22,14 @@ router.beforeEach((to, from, next) => {
             next({ path: '/' })
           })
         })
+        if (store.getters.addRouters.length === 0) {
+          store.dispatch('GenerateRoutes').then(res => {
+            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+            next({ ...to, replace: true })
+          }).catch(error => {
+            console.log(error)
+          })
+        }
       } else {
         next()
       }
