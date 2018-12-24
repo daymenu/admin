@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["TEqH"],{TEqH:function(n,e,t){"use strict";t.r(e);var i={name:"AdminMain"},u=t("KHd+"),a=Object(u.a)(i,function(){var n=this.$createElement;return(this._self._c||n)("router-view")},[],!1,null,null,null);a.options.__file="main.vue";e.default=a.exports}}]);
