@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\LoginRecord;
 
 class LoginController extends Controller
 {
@@ -25,10 +26,16 @@ class LoginController extends Controller
         if (!$user) {
             return $this->apiFaild('用户名不存在');
         }
+        $loginRecord = new LoginRecord();
+        $record['adminId'] = $user->id;
+        $record['ip'] = $request->getClientIp();
         if (!Hash::check($password, $user->password)) {
+            $record['status'] = 2;
+            $loginRecord->record($record);
             return $this->apiFaild('密码错误');
         }
 
+        $loginRecord->record($record);
         $http = new Client();
         $forms = [
             'form_params' => [

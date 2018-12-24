@@ -10,6 +10,7 @@ Vue.use(Router)
 // import Layout from '../views/layout/Layout'
 
 import authRouter from './modules/auth'
+import safeRouter from './modules/safe'
 
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -42,6 +43,7 @@ export const constantRouterMap = [
 
 export const asyncRouterMap = [
   authRouter,
+  safeRouter,
   { path: '*', redirect: '/404', hidden: true }
 ]
 

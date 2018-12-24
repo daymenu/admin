@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable,HasApiTokens,SoftDeletes;
+    use Notifiable, HasApiTokens, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -34,7 +34,7 @@ class User extends Authenticatable
 
     public function menuIds($userId)
     {
-        
+
         $userRole = new UserRole();
         $roleMenu = new RoleMenu();
         $menu = new Menu();
@@ -51,7 +51,7 @@ class User extends Authenticatable
             $allIds[$menuId] = $menuId;
             $pIds = $this->findParendIds($menuKv, $menuId);
             if ($pIds) {
-                $allIds  =  $allIds + $pIds;
+                $allIds = $allIds + $pIds;
             }
         }
         $priMenus = [];
@@ -94,7 +94,7 @@ class User extends Authenticatable
             $allIds[$menuId] = $menuId;
             $pIds = $this->findParendIds($menuKv, $menuId);
             if ($pIds) {
-                $allIds  =  $allIds + $pIds;
+                $allIds = $allIds + $pIds;
             }
         }
         return $allIds;
@@ -108,5 +108,49 @@ class User extends Authenticatable
         $api = new Api();
         return $api->whereIn('id', $apiIds)->pluck('route')->toArray();
 
+    }
+
+    public function kv($ids = [])
+    {
+        if ($ids) {
+            $this->whereIn('id', $ids);
+        }
+        $data = $this->select('id', 'name')->get();
+        $kv = [];
+        if ($data) {
+            foreach ($data as $item) {
+                $kv[$item->id] = $item->name;
+            }
+        }
+        return $kv;
+    }
+
+    public function kUser($ids = [])
+    {
+        if ($ids) {
+            $this->whereIn('id', $ids);
+        }
+        $data = $this->get();
+        $kv = [];
+        if ($data) {
+            foreach ($data as $item) {
+                $kv[$item->id] = $item;
+            }
+        }
+        return $kv;
+    }
+
+    public function getUserByName($name)
+    {
+        if (!$name) {
+            return false;
+        }
+
+        $user = $this->where(function ($query) use ($name) {
+            $query->orWhere('user_name', 'like', '%'.$name.'%');
+            $query->orWhere('email', 'like', '%'.$name.'%');
+        });
+
+        return $user->first();
     }
 }
