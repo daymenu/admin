@@ -58,7 +58,7 @@ const AuthRouter = {
   {
     path: 'menu',
     component: () => import('@/views/auth/menu/index'), // Parent router-view
-    name: 'autnMenu',
+    name: 'authMenu',
     meta: {
       title: '菜单管理'
     }
