@@ -6,7 +6,7 @@ const AuthRouter = {
   name: 'auth',
   meta: {
     title: '权限管理',
-    icon: 'eye'
+    icon: 'user'
   },
   children: [{
     path: 'admin',
