@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-input v-model="listQuery.search" placeholder="接口名称" style="width: 200px;" class="filter-item"/>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="create">添加</el-button>
+      <el-button v-if="hasPrimission('authApiAdd')" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="create">添加</el-button>
     </div>
     <el-table
       v-loading="listLoading"
@@ -50,8 +50,8 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="deleteRow(scope.row)">删除
+          <el-button v-if="hasPrimission('authApiEdit')" type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
+          <el-button v-if="hasPrimission('authApiDelete')" size="mini" type="danger" @click="deleteRow(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>

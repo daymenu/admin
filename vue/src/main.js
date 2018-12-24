@@ -14,6 +14,9 @@ import store from './store'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import hasPrimission from '@/utils/button'
+
+Vue.prototype.hasPrimission = hasPrimission
 
 Vue.use(ElementUI, { locale })
 

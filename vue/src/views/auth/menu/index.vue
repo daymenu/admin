@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-input v-model="listQuery.search" placeholder="菜单名称" style="width: 200px;" class="filter-item"/>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="create">添加</el-button>
+      <el-button v-if="hasPrimission('authMenuAdd')" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="create">添加</el-button>
     </div>
     <el-table
       v-loading="listLoading"
@@ -45,9 +45,9 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="success" size="mini" @click="apiShow(scope.row)">接口</el-button>
-          <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="deleteRow(scope.row)">删除
+          <el-button v-if="hasPrimission('authMenuApi')" type="success" size="mini" @click="apiShow(scope.row)">接口</el-button>
+          <el-button v-if="hasPrimission('authMenuEdit')" type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
+          <el-button v-if="hasPrimission('authMenuDelete')" size="mini" type="danger" @click="deleteRow(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>

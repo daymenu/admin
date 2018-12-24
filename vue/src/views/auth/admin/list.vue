@@ -4,7 +4,7 @@
       <el-input v-model="listQuery.search" placeholder="请输入邮箱号/姓名" style="width: 200px;" class="filter-item"/>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
       <router-link :to="'/auth/admin/add'">
-        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加</el-button>
+        <el-button v-if="hasPrimission('authAdminAdd')" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加</el-button>
       </router-link>
     </div>
     <el-table
@@ -49,7 +49,7 @@
       <el-table-column align="center" label="操作" width="120">
         <template slot-scope="scope">
           <router-link :to="'/auth/admin/edit/'+scope.row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">编辑</el-button>
+            <el-button v-if="hasPrimission('authAdminEdit')" type="primary" size="small" icon="el-icon-edit" >编辑</el-button>
           </router-link>
         </template>
       </el-table-column>
