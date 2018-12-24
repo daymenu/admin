@@ -4,9 +4,7 @@
 - laravel
 - vue
 
-命令：
-```bash
-php /var/www/html/admin/artisan make:controller Api/RoleController
-php /var/www/html/admin/artisan make:model Models/Role
-php /var/www/html/admin/artisan make:request RoleRequest
-```
+### 项目初衷
+1. 建立一个后台通用系统
+2. 内置权限管理、网站安全
+3. 权限控制可以控制到按钮

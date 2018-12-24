@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UsersPut;
 use App\Http\Requests\UsersPost;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -45,7 +46,7 @@ class UserController extends Controller
         $user->name = (string)$request->input('name');
         $user->email = (string)$request->input('email');
         $user->user_name = (string)$request->input('user_name');
-        $user->password = (string)$request->input('password');
+        $user->password = Hash::make((string)$request->input('password'));
         $user->save();
 
         $roles = $request->input('roles');
@@ -93,7 +94,7 @@ class UserController extends Controller
         $user->email = (string)$request->input('email');
         $user->user_name = (string)$request->input('user_name');
         if ($request->input('password')) {
-            $user->password = (string)$request->input('password');
+            $user->password = Hash::make((string)$request->input('password'));
         }
         $user->save();
 
