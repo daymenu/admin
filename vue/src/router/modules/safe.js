@@ -5,7 +5,7 @@ const SafeRouter = {
   name: 'safe',
   meta: {
     title: '网站安全',
-    icon: 'eye'
+    icon: 'table'
   },
   children: [{
     path: 'login',
@@ -13,6 +13,13 @@ const SafeRouter = {
     name: 'safeLogin',
     meta: {
       title: '登录日志'
+    }
+  }, {
+    path: 'operation',
+    component: () => import('@/views/safe/operation'), // Parent router-view
+    name: 'safeOperation',
+    meta: {
+      title: '操作日志'
     }
   }]
 }

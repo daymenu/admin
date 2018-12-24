@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/role/menuIds', 'Api\RoleController@menuIds')->name('role.menuIds');
         Route::get('/role/kv', 'Api\RoleController@kv')->name('role.kv');
         Route::get('/safe/login', 'Api\LoginRecordController@index')->name('loginrecord.index');
+        Route::get('/safe/operation', 'Api\OperationController@index')->name('operation.index');
 
         Route::apiResources(array(
             '/user' => 'Api\UserController',
