@@ -54,7 +54,7 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../../public/admin'),
-    assetsSubDirectory: 'admin/static',
+    assetsSubDirectory: 'static',
 
     /**
      * You can set by youself according to actual condition
@@ -63,7 +63,7 @@ module.exports = {
      * then assetsPublicPath should be set to "/bar/".
      * In most cases please use '/' !!!
      */
-    assetsPublicPath: '/',
+    assetsPublicPath: '/admin/',
 
     /**
      * Source Maps
