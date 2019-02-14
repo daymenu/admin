@@ -47,7 +47,7 @@ class LoginController extends Controller
                 'scope' => '*',
             ],
         ];
-        $response = $http->post('http://admin.daymenu.cn/oauth/token', $forms);
+        $response = $http->post(url('oauth/token'), $forms);
         return $this->apiSuccess(json_decode((string)$response->getBody(), true));
     }
 
