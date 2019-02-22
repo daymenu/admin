@@ -152,5 +152,8 @@ class User extends Authenticatable
         });
 
         return $user->first();
+    }    
+    public function findForPassport($username) {
+        return $this->Orwhere('user_name', $username)->Orwhere('email', $username)->first();
     }
 }
