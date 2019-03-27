@@ -77,13 +77,9 @@
         <el-form-item label="接口名称" prop="name">
           <el-input v-model="temp.name" type="text" placeholder="请输入接口名称"/>
         </el-form-item>
-      </el-form>
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="route" prop="route">
           <el-input v-model="temp.route" type="text" placeholder="请输入route"/>
         </el-form-item>
-      </el-form>
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="url" prop="url">
           <el-input v-model="temp.url" type="url" placeholder="请输入url"/>
         </el-form-item>

@@ -68,15 +68,11 @@
             change-on-select
           />
         </el-form-item>
-      </el-form>
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="路由名称" prop="name">
-          <el-input v-model="temp.name" type="text" placeholder="请输入路由名称"/>
-        </el-form-item>
-      </el-form>
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="菜单名称" prop="title">
           <el-input v-model="temp.title" type="text" placeholder="菜单名称"/>
+        </el-form-item>
+        <el-form-item label="路由名称" prop="name">
+          <el-input v-model="temp.name" type="text" placeholder="请输入路由名称"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
