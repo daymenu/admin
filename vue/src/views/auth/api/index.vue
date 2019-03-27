@@ -20,7 +20,7 @@
       </el-table-column>
       <el-table-column label="模块名" prop="name" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.pName }}</span>
+          <span>{{ scope.row.pName ? scope.row.pName : '一级模块' }}</span>
         </template>
       </el-table-column>
       <el-table-column label="接口名称" prop="name" align="center">

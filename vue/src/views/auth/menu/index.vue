@@ -25,7 +25,7 @@
       </el-table-column>
       <el-table-column label="父菜单" prop="pName" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.pName }}</span>
+          <span>{{ scope.row.pName ? scope.row.pName : '一级菜单' }}</span>
         </template>
       </el-table-column>
       <el-table-column label="路由名称" prop="name" align="center">
@@ -216,7 +216,6 @@ export default {
       })
     },
     store() {
-      console.log(this.temp)
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.foramtTemp()

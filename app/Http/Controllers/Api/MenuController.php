@@ -18,8 +18,8 @@ class MenuController extends Controller
     public function index(Request $request, Menu $menu)
     {
         $search = $request->input('search');
-        
-        $menuModel = $menu->where(function($query) use ($search){
+
+        $menuModel = $menu->where(function ($query) use ($search) {
             if ($search) {
                 $query->orWhere('title', 'like', '%' . $search . '%');
                 $query->orWhere('name', 'like', '%' . $search . '%');
@@ -140,10 +140,11 @@ class MenuController extends Controller
         $menuId = $request->input('menuId');
         $menuApi->where('menu_id', $menuId)->delete();
         $apis = $request->input('apis');
+        $addTime = date('Y-m-d H:i:s');
         if ($apis) {
             $insertData = [];
             foreach ($apis as $apiId) {
-                $insertData[] = ['menu_id' => $menuId, 'api_id' => $apiId];
+                $insertData[] = ['menu_id' => $menuId, 'api_id' => $apiId, 'created_at' => $addTime];
             }
             $menuApi->insert($insertData);
         }
