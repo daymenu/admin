@@ -12,6 +12,7 @@
       element-loading-text="加载中..."
       border
       fit
+      row-key="id"
       highlight-current-row>
       <el-table-column label="ID" prop="id" align="center">
         <template slot-scope="scope">
@@ -107,6 +108,7 @@ import { getList, store, update, destroy, menuSelect, addApis, apiIds } from '@/
 import { apiTree } from '@/api/auth/api'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import waves from '@/directive/waves' // Waves directive
+import { toTree } from '@/utils/toTree'
 export default {
   name: 'Api',
   components: { Pagination },
@@ -129,7 +131,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 10,
+        limit: 50,
         search: undefined
       },
       pIdOptions: [],
@@ -165,7 +167,7 @@ export default {
     getList() {
       this.listLoading = true
       getList(this.listQuery).then(response => {
-        this.list = response.data.data
+        this.list = toTree(response.data.data)
         this.total = response.data.total
         this.listLoading = false
       }).catch(error => {

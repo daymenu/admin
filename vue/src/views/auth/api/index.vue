@@ -11,6 +11,7 @@
       :data="list"
       element-loading-text="加载中..."
       border
+      row-key="id"
       fit
       highlight-current-row>
       <el-table-column label="ID" prop="id" align="center">
@@ -119,7 +120,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 10,
+        limit: 50,
         search: undefined
       },
       statusOptions: ['published', 'draft', 'deleted'],
@@ -153,7 +154,7 @@ export default {
     getList() {
       this.listLoading = true
       getList(this.listQuery).then(response => {
-        this.list = response.data.data
+        this.list = toTree(response.data.data)
         this.total = response.data.total
         this.listLoading = false
       }).catch(error => {
