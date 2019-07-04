@@ -13,3 +13,4 @@ yarn-error.log
 .phpunit.result.cache
 vue/node_modules
 .vscode/sftp.json
+.env
