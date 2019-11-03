@@ -1,5 +1,5 @@
 
-export function toTree(data){
+export function toTree(data) {
   data.forEach(item => {
     delete item.children
   })
@@ -11,7 +11,7 @@ export function toTree(data){
   data.forEach(item => {
     var parent = map[item.pId]
     if (parent) {
-      ( parent.children || (parent.children = []) ).push(item)
+      (parent.children || (parent.children = [])).push(item)
     } else {
       val.push(item)
     }

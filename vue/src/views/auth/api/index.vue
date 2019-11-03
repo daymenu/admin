@@ -98,6 +98,7 @@
 import { getList, store, update, destroy, apiTree } from '@/api/auth/api'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import waves from '@/directive/waves' // Waves directive
+import { toTree } from '@/utils/toTree'
 export default {
   name: 'Api',
   components: { Pagination },
